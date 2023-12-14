@@ -24,3 +24,16 @@ config RT_STUDIO_BUILT_IN
     select ARCH_ARM_CORTEX_M7
     select RT_USING_COMPONENTS_INIT
     default y
+
+menu "Memory XIP Configs"
+
+config BSP_USING_APS256XX_HSPI_PSRAM
+    bool "Using highspeed APS256XX HSPI(X16) PSRAM"
+    default y
+
+config BSP_USING_W35T51NW_OSPI_FLASH
+    bool "Using highspeed W35T51NW OSPI(X8) NorFlash"
+    default y
+
+endmenu
+

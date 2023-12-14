@@ -10,7 +10,6 @@
 
 #include <rthw.h>
 #include <rtthread.h>
-#include "w25qxx.h"
 
 void rt_application_init(void);
 void rt_hw_board_init(void);
@@ -143,10 +142,8 @@ int rtthread_startup(void)
 #endif /*RT_USING_SMP*/
 
 #ifndef FIRMWARE_EXEC_USING_QEMU
-    MX_QUADSPI_Init();
+//@TODO external flash escape from OCTAL Mode to basic 1-line spi mode.
 
-    W25QXX_ExitQPIMode();
-    W25QXX_Reset();
 #endif
     
     /* start scheduler */

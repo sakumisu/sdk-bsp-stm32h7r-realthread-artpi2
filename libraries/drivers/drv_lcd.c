@@ -132,9 +132,9 @@ rt_err_t stm32_lcd_init(struct drv_lcd_device *lcd)
     /* Accumulated vertical back porch = Vsync + VBP - 1 */
     LtdcHandle.Init.AccumulatedVBP = LCD_VSYNC_HEIGHT + LCD_VBP - 1;
     /* Accumulated active width = Hsync + HBP + Active Width - 1 */
-    LtdcHandle.Init.AccumulatedActiveW = LCD_HSYNC_WIDTH + LCD_HBP + lcd->lcd_info.width - 1 ;
+    LtdcHandle.Init.AccumulatedActiveW = LCD_HSYNC_WIDTH + LCD_HBP + lcd->lcd_info.width - 1;//+320
     /* Accumulated active height = Vsync + VBP + Active Heigh - 1 */
-    LtdcHandle.Init.AccumulatedActiveH = LCD_VSYNC_HEIGHT + LCD_VBP + lcd->lcd_info.height - 1;
+    LtdcHandle.Init.AccumulatedActiveH = LCD_VSYNC_HEIGHT + LCD_VBP + lcd->lcd_info.height - 1; //+208
     /* Total height = Vsync + VBP + Active Heigh + VFP - 1 */
     LtdcHandle.Init.TotalHeigh = LtdcHandle.Init.AccumulatedActiveH + LCD_VFP;
     /* Total width = Hsync + HBP + Active Width + HFP - 1 */
@@ -237,9 +237,9 @@ void turn_on_lcd_backlight(void)
 void turn_on_lcd_backlight(void)
 {
     rt_pin_mode(LCD_BL_GPIO_NUM, PIN_MODE_OUTPUT);
-    rt_pin_mode(LCD_DISP_GPIO_NUM, PIN_MODE_OUTPUT);
+//    rt_pin_mode(LCD_DISP_GPIO_NUM, PIN_MODE_OUTPUT);
 
-    rt_pin_write(LCD_DISP_GPIO_NUM, PIN_HIGH);
+//    rt_pin_write(LCD_DISP_GPIO_NUM, PIN_HIGH);
     rt_pin_write(LCD_BL_GPIO_NUM, PIN_HIGH);
 }
 #else
@@ -285,7 +285,7 @@ int drv_lcd_hw_init(void)
     _lcd.lcd_info.pixel_format = LCD_PIXEL_FORMAT;
 
     /* malloc memory for Triple Buffering */
-    _lcd.lcd_info.framebuffer = rt_malloc_align(LCD_BUF_SIZE, LCD_BUF_SIZE);
+    _lcd.front_buf=_lcd.lcd_info.framebuffer = rt_malloc_align(LCD_BUF_SIZE, 32);
     _lcd.back_buf = rt_malloc_align(LCD_BUF_SIZE, LCD_BUF_SIZE);
     _lcd.front_buf = rt_malloc_align(LCD_BUF_SIZE, LCD_BUF_SIZE);
     if (_lcd.lcd_info.framebuffer == RT_NULL || _lcd.back_buf == RT_NULL || _lcd.front_buf == RT_NULL)
@@ -294,7 +294,6 @@ int drv_lcd_hw_init(void)
         result = -RT_ENOMEM;
         goto __exit;
     }
-
     /* memset buff to 0xFF */
     memset(_lcd.lcd_info.framebuffer, 0xFF, LCD_BUF_SIZE);
     memset(_lcd.back_buf, 0xFF, LCD_BUF_SIZE);
@@ -347,6 +346,7 @@ __exit:
     return result;
 }
 INIT_DEVICE_EXPORT(drv_lcd_hw_init);
+//MSH_CMD_EXPORT(drv_lcd_hw_init,drv_lcd_hw_init);
 
 #ifndef ART_PI_TouchGFX_LIB
 #ifdef DRV_DEBUG

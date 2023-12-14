@@ -23,8 +23,8 @@ FINSH_FUNCTION_EXPORT_ALIAS(reboot, __cmd_reboot, Reboot System);
 /* SysTick configuration */
 void rt_hw_systick_init(void)
 {
-#if defined (SOC_SERIES_STM32H7)
-    HAL_SYSTICK_Config((HAL_RCCEx_GetD1SysClockFreq()) / RT_TICK_PER_SECOND);
+#if defined (SOC_SERIES_STM32H7RS)
+    HAL_SYSTICK_Config((HAL_RCC_GetSysClockFreq()) / RT_TICK_PER_SECOND);
 #else
     HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / RT_TICK_PER_SECOND);
 #endif
@@ -105,6 +105,9 @@ void rt_hw_us_delay(rt_uint32_t us)
     } while(delta < us_tick * us);
 }
 
+//#define SCB_EnableICache
+//#define SCB_EnableDCache
+
 /**
  * This function will initial STM32 board.
  */
@@ -126,6 +129,12 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
     /* HAL_Init() function is called at the beginning of the program */
     HAL_Init();
 
+    /* Configure the system Power Supply */
+    if (HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY) != HAL_OK)
+    {
+    /* Initialization error */
+    Error_Handler();
+    }
     /* enable interrupt */
     __set_PRIMASK(0);
     /* System clock initialization */

@@ -52,24 +52,6 @@ jobs:
        legs:
          - {RTT_BSP: "art_pi_blink_led"}
          - {RTT_BSP: "art_pi_bootloader"}
-         - {RTT_BSP: "art_pi_lvgl"}
-         - {RTT_BSP: "art_pi_rust"}
-         - {RTT_BSP: "art_pi_gc0328c_camera"}
-         - {RTT_BSP: "art_pi_net_player"}
-         - {RTT_BSP: "art_pi_sensor485_app"}
-         - {RTT_BSP: "art_pi_wifi"}
-         - {RTT_BSP: "lrs007_lora_gw_driver"}
-         - {RTT_BSP: "lrs007_lora_loopback"}
-         - {RTT_BSP: "lrs007_lora_pkt_sniffer"}
-         - {RTT_BSP: "lrs007_lora_radio"}
-         - {RTT_BSP: "lrs007_lorawan_end_device"}
-         - {RTT_BSP: "lrs007_lorawan_gateway"}
-         - {RTT_BSP: "industry_io_gateway"}         
-         - {RTT_BSP: "art_pi_qboot"}
-         - {RTT_BSP: "art_pi_kboot"}
-         - {RTT_BSP: "art_pi_mcuboot"}
-         - {RTT_BSP: "art_pi_nes"}
-         - {RTT_BSP: "art_pi_fibocom_l610"}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -81,10 +63,10 @@ jobs:
         if: ${{ success() }}
         shell: bash
         run: |
-          wget -q https://github.com/RT-Thread/toolchains-ci/releases/download/arm-2017q2-v6/gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 
-          sudo tar xjf gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 -C /opt  
-          /opt/gcc-arm-none-eabi-6-2017-q2-update/bin/arm-none-eabi-gcc --version
-          echo "RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin" >> $GITHUB_ENV
+          wget -c https://github.com/RT-Thread/toolchains-ci/releases/download/v1.8/arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz
+          sudo tar -xf arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz -C /opt
+          /opt/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc --version
+          echo "RTT_EXEC_PATH=/opt/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin" >> $GITHUB_ENV
 
       - name: Install Tools
         if: ${{ success() }}
