@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32H7S7xx, RT_USING_ARMLIBC, USE_HAL_DRIVER, RT_USING_LIBC, __CLK_TCK=RT_TICK_PER_SECOND, __STDC_LIMIT_MACROS, __RTTHREAD__</Define>
               <Undefine></Undefine>
-              <IncludePath>rt-thread\components\drivers\spi;rt-thread\components\drivers\include;rt-thread\components\libc\posix\io\poll;rt-thread\components\libc\compilers\common\include;rt-thread\components\finsh;libraries\drivers\include\config;applications;rt-thread\components\drivers\include;rt-thread\libcpu\arm\common;libraries\samples;board\CubeMX_Config\Boot\Inc;.;rt-thread\include;rt-thread\components\libc\compilers\common\extension;rt-thread\components\drivers\include;libraries\bsp_components;libraries\CMSIS\Include;libraries\drivers\include;libraries\drivers;libraries\bsp_components\w35t51nwtbie;board;rt-thread\components\libc\posix\io\eventfd;rt-thread\components\drivers\include;libraries\CMSIS\Device\ST\STM32H7RSxx\Include;rt-thread\libcpu\arm\cortex-m7;rt-thread\components\libc\posix\ipc;rt-thread\components\libc\compilers\common\extension\fcntl\octal;rt-thread\components\libc\posix\io\epoll;libraries\STM32H7RSxx_HAL_Driver\Inc;libraries\bsp_components\aps256xx;rt-thread\components\drivers\include</IncludePath>
+              <IncludePath>libraries\bsp_components\hspi;rt-thread\components\drivers\spi;rt-thread\components\drivers\include;rt-thread\components\libc\posix\io\poll;rt-thread\components\libc\compilers\common\include;rt-thread\components\finsh;libraries\drivers\include\config;applications;rt-thread\components\drivers\include;rt-thread\libcpu\arm\common;libraries\samples;board\CubeMX_Config\Boot\Inc;.;rt-thread\include;rt-thread\components\libc\compilers\common\extension;rt-thread\components\drivers\include;libraries\bsp_components;libraries\CMSIS\Include;libraries\drivers\include;libraries\drivers;libraries\bsp_components\w35t51nwtbie;board;rt-thread\components\libc\posix\io\eventfd;rt-thread\components\drivers\include;libraries\CMSIS\Device\ST\STM32H7RSxx\Include;rt-thread\libcpu\arm\cortex-m7;rt-thread\components\libc\posix\ipc;rt-thread\components\libc\compilers\common\extension\fcntl\octal;rt-thread\components\libc\posix\io\epoll;libraries\STM32H7RSxx_HAL_Driver\Inc;libraries\bsp_components\aps256xx;rt-thread\components\drivers\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -385,14 +385,14 @@
           <GroupName>Applications</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>applications\main.c</FilePath>
-            </File>
-            <File>
               <FileName>boot.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2150,7 +2150,7 @@
             <File>
               <FileName>stm32h7rsxx_hspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\bsp_components\stm32h7rsxx_hspi.c</FilePath>
+              <FilePath>libraries\bsp_components\hspi\stm32h7rsxx_hspi.c</FilePath>
             </File>
             <File>
               <FileName>w35t51nwtbie.c</FileName>

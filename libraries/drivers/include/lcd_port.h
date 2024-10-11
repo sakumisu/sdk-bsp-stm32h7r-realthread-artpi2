@@ -36,11 +36,12 @@ struct drv_lcd_device
 #define LCD_BUF_SIZE        (LCD_WIDTH * LCD_HEIGHT * LCD_BITS_PER_PIXEL / 8)
 #define LCD_PIXEL_FORMAT    RTGRAPHIC_PIXEL_FORMAT_RGB565
 
-#define LCD_HSYNC_WIDTH     1
-#define LCD_VSYNC_HEIGHT    1
-#define LCD_HBP             40
+// applied to ATK-4384 LCD screen
+#define LCD_HSYNC_WIDTH     48
+#define LCD_VSYNC_HEIGHT    3
+#define LCD_HBP             88
 #define LCD_VBP             32
-#define LCD_HFP             48
+#define LCD_HFP             40
 #define LCD_VFP             13
 
 #define LCD_BACKLIGHT_USING_GPIO

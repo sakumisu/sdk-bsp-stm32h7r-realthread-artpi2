@@ -57,7 +57,7 @@ extern "C" {
 /***** READ/WRITE MEMORY Operations with 3-Byte Address checked OK ****************************/
 #define W35T51NWTBIE_READ_CMD                             0x03U   /*!< Normal Read 3 Byte Address                            */
 #define W35T51NWTBIE_FAST_READ_CMD                        0x0BU   /*!< Fast Read 3(4) Byte Address                           */
-#define W35T51NWTBIE_PAGE_PROG_CMD                        0x02U   /*!< Page Program 3(4) Byte Address                        */
+#define W35T51NWTBIE_PAGE_PROG_CMD                        0x02U   /*!< Page Program 3(4) Byte Address, 1-256bytes per time   */
 #define W35T51NWTBIE_SUBSECTOR_ERASE_4K_CMD               0x20U   /*!< SubSector Erase 4KB 3(4) Byte Address                 */
 #define W35T51NWTBIE_SECTOR_ERASE_64K_CMD                 0xD8U   /*!< Sector Erase 64KB 3(4) Byte Address                   */
 #define W35T51NWTBIE_BULK_ERASE_CMD                       0x60U   /*!< Bulk Erase                                            */

@@ -19,25 +19,13 @@ menu "Onboard Peripheral Drivers"
         select BSP_USING_UART4
         default n
 
-    config BSP_USING_SPI_FLASH
-        bool "Enable SPI FLASH (spi1)"
-        select BSP_USING_SPI
-        select BSP_USING_SPI1
+    config BSP_USING_XSPI_NORFLASH
+        bool "Enable XSPI octal norFLASH (w35t1nw) no-xip method"
         select RT_USING_FAL
-        select FAL_USING_SFUD_PORT
-        select RT_USING_SFUD
-        default n
-        
-    config BSP_USING_QSPI_FLASH
-        bool "Enable QSPI FLASH (w25q64 qspi)"
-        select BSP_USING_QSPI
-        select FAL_USING_SFUD_PORT
-        select RT_USING_SFUD
-        select RT_SFUD_USING_QSPI
         default n
 
     config BSP_USING_WIFI
-        bool "Enable wifi (AP6212)"
+        bool "Enable wifi (CYWL6208 or AP6212)"
         select ART_PI_USING_WIFI_6212_LIB
         select ART_PI_USING_OTA_LIB
         select BSP_USING_SPI_FLASH
@@ -235,8 +223,8 @@ menu "On-chip Peripheral"
                 default n
         endif
 
-    config BSP_USING_SDRAM
-        bool "Enable SDRAM"
+    config BSP_USING_PSRAM
+        bool "Enable PSRAM"
         default n
 
     menuconfig BSP_USING_ETH
@@ -261,7 +249,7 @@ menu "On-chip Peripheral"
     config BSP_USING_LCD
         bool "Enable LCD"
         select BSP_USING_GPIO
-        select BSP_USING_SDRAM
+        select BSP_USING_PSRAM
         select RT_USING_MEMHEAP
         default n
 
@@ -372,10 +360,10 @@ endmenu
 
 choice
     prompt "The target of download and execute firmware"
-    default FIRMWARE_EXEC_USING_QSPI_FLASH
+    default FIRMWARE_EXEC_USING_OSPI_FLASH
 
-    config FIRMWARE_EXEC_USING_QSPI_FLASH
-        bool "QSPI Flash"
+    config FIRMWARE_EXEC_USING_OSPI_FLASH
+        bool "OSPI Flash"
 
     config FIRMWARE_EXEC_USING_QEMU
         bool "QEMU"

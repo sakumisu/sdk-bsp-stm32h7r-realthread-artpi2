@@ -19,7 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include <rtthread.h>
-#include "stm32h7rsxx_hspi.h"
+#include <stm32h7rsxx_hspi.h>
 
 /** @addtogroup STM32U5xx_HAL_Examples
 * @{

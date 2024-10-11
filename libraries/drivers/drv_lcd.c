@@ -132,9 +132,9 @@ rt_err_t stm32_lcd_init(struct drv_lcd_device *lcd)
     /* Accumulated vertical back porch = Vsync + VBP - 1 */
     LtdcHandle.Init.AccumulatedVBP = LCD_VSYNC_HEIGHT + LCD_VBP - 1;
     /* Accumulated active width = Hsync + HBP + Active Width - 1 */
-    LtdcHandle.Init.AccumulatedActiveW = LCD_HSYNC_WIDTH + LCD_HBP + lcd->lcd_info.width - 1;//+320
+    LtdcHandle.Init.AccumulatedActiveW = LCD_HSYNC_WIDTH + LCD_HBP + lcd->lcd_info.width - 1 ;
     /* Accumulated active height = Vsync + VBP + Active Heigh - 1 */
-    LtdcHandle.Init.AccumulatedActiveH = LCD_VSYNC_HEIGHT + LCD_VBP + lcd->lcd_info.height - 1; //+208
+    LtdcHandle.Init.AccumulatedActiveH = LCD_VSYNC_HEIGHT + LCD_VBP + lcd->lcd_info.height - 1;
     /* Total height = Vsync + VBP + Active Heigh + VFP - 1 */
     LtdcHandle.Init.TotalHeigh = LtdcHandle.Init.AccumulatedActiveH + LCD_VFP;
     /* Total width = Hsync + HBP + Active Width + HFP - 1 */
