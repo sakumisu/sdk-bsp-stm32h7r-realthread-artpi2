@@ -98,17 +98,16 @@ if GetDepend(['RT_USING_SERIAL']):
 # if GetDepend(['RT_USING_MTD_NAND']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_nand.c']
 
-# if GetDepend(['BSP_USING_SDRAM']):
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c']
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c']
+# if GetDepend(['BSP_USING_PSRAM']):
+#     src += ['Src/stm32h7rsxx_hal_xspi.c']
 
 # if GetDepend(['BSP_USING_ON_CHIP_FLASH']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c']
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c']
 
-# if GetDepend(['BSP_USING_LCD']):
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c']
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c']
+if GetDepend(['BSP_USING_LCD']):
+    src += ['Src/stm32h7rsxx_hal_ltdc.c']
+    src += ['Src/stm32h7rsxx_hal_dma2d.c']
 
 # if GetDepend(['BSP_USING_DCMI']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dcmi.c']
