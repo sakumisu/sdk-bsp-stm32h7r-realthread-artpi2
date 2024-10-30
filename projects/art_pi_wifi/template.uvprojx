@@ -14,14 +14,14 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32H7S7L8Hx</Device>
+          <Device>STM32H7R7L8HxH</Device>
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32H7RSxx_DFP.1.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x00000000,0x00010000) IRAM2(0x20000000,0x00010000) IROM(0x08000000,0x00010000) XRAM(0x24000000,0x00072000) XRAM2(0x30000000,0x00008000) XRAM3(0x38800000,0x00001000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC10000 -FN1 -FF0STM32H7Rx_64k -FS08000000 -FL010000 -FP0($$Device:STM32H7S7L8Hx$CMSIS\Flash\STM32H7Rx_64k.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC10000 -FN1 -FF0STM32H7Rx_64k -FS08000000 -FL010000 -FP0($$Device:STM32H7R7L8HxH$CMSIS\Flash\STM32H7Rx_64k.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32H7S7L8Hx$CMSIS\SVD\STM32H7S.svd</SFDFile>
+          <SFDFile>$$Device:STM32H7R7L8HxH$CMSIS\SVD\STM32H7R.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -211,8 +211,8 @@
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>1</Im1Chk>
-            <Im2Chk>0</Im2Chk>
+            <Im1Chk>0</Im1Chk>
+            <Im2Chk>1</Im2Chk>
             <OnChipMemories>
               <Ocm1>
                 <Type>0</Type>
@@ -286,28 +286,28 @@
               </OCR_RVCT5>
               <OCR_RVCT6>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x24000000</StartAddress>
+                <Size>0x72000</Size>
               </OCR_RVCT6>
               <OCR_RVCT7>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x30000000</StartAddress>
+                <Size>0x8000</Size>
               </OCR_RVCT7>
               <OCR_RVCT8>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x38800000</StartAddress>
+                <Size>0x1000</Size>
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x20000</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x10000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x10000</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>

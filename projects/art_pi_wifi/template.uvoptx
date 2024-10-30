@@ -119,13 +119,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U0671FF363658393143204936 -O206 -SF10000 -C0 -A1 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(6BA02477) -L00(0) -TO131090 -TC10000000 -TT10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC10000 -FN1 -FF0ART-Pi2_winbond_64MB -FS070000000 -FL04000000 -WA0 -WE0 -WVCE4 -WS2710 -WM0 -WP2 -WK0-R0</Name>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC10000 -FD20000000 -FF0STM32H7Rx_64k -FL010000 -FS08000000 -FP0($$Device:STM32H7R7L8HxH$CMSIS\Flash\STM32H7Rx_64k.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC10000 -FD20000000 -FF0STM32H7Rx_64k -FL010000 -FS08000000 -FP0($$Device:STM32H7S7L8Hx$CMSIS\Flash\STM32H7Rx_64k.FLM)</Name>
+          <Key>ST-LINKIII-KEIL_SWO</Key>
+          <Name>-U0671FF363658393143204936 -O206 -SF5000 -C0 -A1 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(6BA02477) -L00(0) -TO131090 -TC10000000 -TT10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC10000 -FN1 -FF0ART-Pi2_winbond_64MB -FS070000000 -FL04000000 -WA0 -WE0 -WVCE4 -WS2710 -WM0 -WP2 -WK0-R0</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -176,7 +176,7 @@
         <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
-        <DbgClock>10000000</DbgClock>
+        <DbgClock>5000000</DbgClock>
       </DebugDescription>
     </TargetOption>
   </Target>
