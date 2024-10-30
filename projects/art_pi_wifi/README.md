@@ -41,12 +41,13 @@ msh />wifi join TP-LINK_86A9 xxxxxxxx
 msh />[I/WLAN.lwip] Got IP address : 192.168.0.101
 msh />iperf -c 192.168.0.111
 msh />[I/iperf] Connect to iperf server successful!
-[I/iperf] iperfc0: 6.8880 Mbps!
-[I/iperf] iperfc0: 7.0230 Mbps!
-[I/iperf] iperfc0: 7.1670 Mbps!
-[I/iperf] iperfc0: 7.4890 Mbps!
-[I/iperf] iperfc0: 7.5890 Mbps!
-[I/iperf] iperfc0: 7.1320 Mbps!
+[I/iperf] iperfc0: 13.5890 Mbps!
+[I/iperf] iperfc0: 13.2310 Mbps!
+[I/iperf] iperfc0: 13.2060 Mbps!
+[I/iperf] iperfc0: 13.5260 Mbps!
+[I/iperf] iperfc0: 13.6960 Mbps!
+[I/iperf] iperfc0: 13.7920 Mbps!
+[I/iperf] iperfc0: 13.8540 Mbps!
 ```
 
 ## 注意事项
