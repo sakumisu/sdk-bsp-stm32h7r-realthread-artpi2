@@ -43,6 +43,10 @@ if GetDepend(['RT_USING_SERIAL']):
     src += ['Src/stm32h7rsxx_hal_usart.c']
     src += ['Src/stm32h7rsxx_hal_uart_ex.c']
 
+if GetDepend(['RT_USING_SDIO']):
+    src += ['Src/stm32h7rsxx_ll_sdmmc.c']
+    src += ['Src/stm32h7rsxx_hal_sd.c']
+
 # if GetDepend(['RT_USING_I2C']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c']
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c']
@@ -81,10 +85,6 @@ if GetDepend(['RT_USING_SERIAL']):
 # if GetDepend(['RT_USING_WDT']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_iwdg.c']
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_wwdg.c']
-
-# if GetDepend(['RT_USING_SDIO']):
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c']
-#     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sd.c']
 
 # if GetDepend(['RT_USING_AUDIO']):
 #     src += ['STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2s.c']
