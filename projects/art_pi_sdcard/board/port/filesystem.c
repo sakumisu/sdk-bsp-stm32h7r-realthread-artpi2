@@ -25,7 +25,7 @@
 
 #include <dfs_fs.h>
 #include "dfs_romfs.h"
-#include "drv_sdio.h"
+#include "drv_sdmmc.h"
 
 #define DBG_TAG "app.filesystem"
 #define DBG_LVL DBG_INFO
@@ -51,7 +51,7 @@ static void _sdcard_mount(void)
     if (device == NULL)
     {
         mmcsd_wait_cd_changed(0);
-        sdcard_change();
+        stm32_mmcsd_change();
         mmcsd_wait_cd_changed(RT_WAITING_FOREVER);
         device = rt_device_find("sd0");
     }
@@ -75,7 +75,7 @@ static void _sdcard_unmount(void)
     LOG_I("Unmount \"/sdcard\"");
 
     mmcsd_wait_cd_changed(0);
-    sdcard_change();
+    stm32_mmcsd_change();
     mmcsd_wait_cd_changed(RT_WAITING_FOREVER);
 }
 
