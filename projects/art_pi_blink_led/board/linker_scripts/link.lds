@@ -5,9 +5,9 @@
 /* Program Entry, set to mark it as "used" and avoid gc */
 MEMORY
 {
-ROM (rx)    : ORIGIN =0x08000000,LENGTH =8192k
-QFLASH (rx) : ORIGIN =0x90000000,LENGTH =8192k
-RAM (rw)    : ORIGIN =0x24000000,LENGTH =512k
+ROM (rx)    : ORIGIN =0x08000000,LENGTH =64k
+QFLASH (rx) : ORIGIN =0x70000000,LENGTH =8192k
+RAM (rw)    : ORIGIN =0x24000000,LENGTH =456k
 }
 ENTRY(Reset_Handler)
 _system_stack_size = 0x200;
