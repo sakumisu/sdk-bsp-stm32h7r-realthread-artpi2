@@ -25,7 +25,7 @@
 
 #include <dfs_fs.h>
 #include "dfs_romfs.h"
-#include "drv_sdio.h"
+#include "drv_sdmmc.h"
 
 #define DBG_TAG "app.filesystem"
 #define DBG_LVL DBG_INFO
