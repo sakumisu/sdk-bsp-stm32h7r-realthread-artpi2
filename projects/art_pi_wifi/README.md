@@ -1,4 +1,4 @@
-# LED闪烁例程
+# WiFi例程
 
 ## 简介
 
@@ -6,11 +6,22 @@
 这个例程也可以做为您的创作IOT的基础工程。
 
 ## 软件说明
-
+- 使用`pkgs --upgrade` 命令更新在线软件包配置
+- 该例程默认`使用SD卡加载资源文件`，需要将`wifi-host-driver`软件包中以下`firmware`和`clm`文件放到SD卡的根目录:
+```
+packages/wifi-host-driver-latest/wifi-host-driver/WiFi_Host_Driver/resources/clm/COMPONENT_43438/43438A1.clm_blob
+packages/wifi-host-driver-latest/wifi-host-driver/WiFi_Host_Driver/resources/firmware/COMPONENT_43438/43438A1.bin
+```
+- 如果想不插SD卡快速实验，可取消选中`Using resources in external storage`不使用外部储存加载资源文件:
+```
+→ RT-Thread online packages →
+    IoT - internet of things →
+        Wifi-Host-Driver(WHD) for RT-Thread
+            [ ]   Using resources in external storage  ---
+```
 
 ## 运行
 ### 编译&下载
-- 使用`pkgs --upgrade` 命令更新在线软件包配置
 - 使用`pkgs --update`命令更新软件包(下载`wifi-host-driver`和`netutils`软件包)
 - 使用`scons -j24`或者`scons --target=mdk4/mdk5/iar` 命令生产`IDE`工程进行编译
 - 编译完成后，将开发板的 ST-Link USB 口与 PC 机连接，然后将固件下载至开发板。
