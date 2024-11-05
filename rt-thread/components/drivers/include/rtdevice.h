@@ -85,9 +85,9 @@ extern "C" {
 
 #ifdef RT_USING_SERIAL
 #ifdef RT_USING_SERIAL_V2
-#include "drivers/serial_v2.h"
+#include "drivers/dev_serial_v2.h"
 #else
-#include "drivers/serial.h"
+#include "drivers/dev_serial.h"
 #endif
 #endif /* RT_USING_SERIAL */
 
