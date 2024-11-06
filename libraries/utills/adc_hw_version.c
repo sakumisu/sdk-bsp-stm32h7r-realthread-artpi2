@@ -13,6 +13,41 @@
 #include <board.h>
 #include <drv_common.h>
 
+/* Definitions of environment analog values */
+  /* Value of analog reference voltage (Vref+), connected to analog voltage   */
+  /* supply Vdda (unit: mV).                                                  */
+  #define VDDA_APPLI                       (3300UL)
+
+/* Definitions of data related to this example */
+  /* Init variable out of expected ADC conversion data range */
+  #define VAR_CONVERTED_DATA_INIT_VALUE    (__LL_ADC_DIGITAL_SCALE(LL_ADC_RESOLUTION_12B) + 1)
+
+
+const static uint16_t hardware_vol_rank[8] = 
+{
+  50,   // less than 50mV, fail
+  75,   // 50-75 (normally 65mV) HW=0.1, BOM=0.1
+  90,
+  65535,
+  65535,
+  65535,
+  65535,
+  65535,
+};
+
+const static uint16_t hardware_ver_rank[8] = 
+{
+  0x0101, //HW 0.1, BOM 0.1
+  0x0201,
+  0x0202,
+  0x1010,
+  0x1011,
+  0xFFFF,
+  0xFFFF,
+  0xFFFF,
+};
+
+
 /**
  * @brief ADC1 Initialization Function
  * @param None

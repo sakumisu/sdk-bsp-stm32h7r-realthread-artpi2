@@ -11,8 +11,13 @@
 // @brief   This file provides xip benchmarks for psram.
 
 #include <rtthread.h>
+#include <board.h>
 
 #ifdef BSP_USING_APS256XX_HSPI_PSRAM
+
+#define DBG_TAG "b-psram"
+#define DBG_LVL DBG_LOG
+#include <rtdbg.h>
 
 #define EXT_SDRAM_ADDR ((uint32_t)0x90000000)
 #define EXT_SDRAM_SIZE (32 * 1024 * 1024)
@@ -25,9 +30,10 @@ static void FillBuff(uint32_t pattern)
   uint32_t i;
   uint32_t *pBuf;
   uint32_t buf;
+  uint32_t err_cnt;
 
   pBuf = (uint32_t *)EXT_SDRAM_ADDR;
-
+  err_cnt = 0;
   for (i = 0; i < 1024 * 1024 ; i++)
   {
       *pBuf++ = pattern;
@@ -46,8 +52,14 @@ static void FillBuff(uint32_t pattern)
     buf = *pBuf;
     if (buf != pattern)
     {
-      rt_kprintf("FillBuff read check error.offset:0x%04x, read:0x%04x\r\n", i, buf);
-      break;
+      err_cnt++;
+      LOG_W("FillBuff read check error.offset:0x%08x, read:0x%08x,should be:0x%08x", i, buf, pattern);
+      if (err_cnt >= 5)
+      {
+        LOG_W("FillBuff read check error more than 5 times, skip this round.\n");
+        break;
+      }
+      
     }
     pBuf++;
   }
@@ -67,6 +79,7 @@ static void WriteSpeedTest(void)
 
 
     FillBuff(0x5AA55AA5);
+    FillBuff(0xA55AA55A);
     j = 0;
     pBuf = (uint32_t *)EXT_SDRAM_ADDR;
     start = rt_tick_get_millisecond();
@@ -241,7 +254,7 @@ static void ReadWriteTest(void)
 }
 MSH_CMD_EXPORT_ALIAS(ReadWriteTest, testrw, PSRAM Read-Write Test);
 
-static void test_memburn_wr()
+void test_memburn_wr()
 {
     while(1)
     {
