@@ -392,6 +392,32 @@ int32_t APS256XX_WriteReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t Val
   return APS256XX_OK;
 }
 
+/**
+  * @brief  Global reset APS256XX
+  * @param  Ctx Component object pointer
+  * @retval error status
+  */
+int32_t APS256XX_DumpReg(XSPI_HandleTypeDef *Ctx, uint8_t *regs, uint32_t LatencyCode)
+{
+  /* Read the Mode Register 1 and 2 */
+  if (APS256XX_ReadReg(Ctx, APS256XX_MR0_ADDRESS, regs, LatencyCode) != APS256XX_OK)
+  {
+    return APS256XX_ERROR;
+  }
+  regs+=2;
+  if (APS256XX_ReadReg(Ctx, APS256XX_MR4_ADDRESS, regs, LatencyCode) != APS256XX_OK)
+  {
+    return APS256XX_ERROR;
+  }
+  regs+=2;
+  if (APS256XX_ReadReg(Ctx, APS256XX_MR8_ADDRESS, regs, LatencyCode) != APS256XX_OK)
+  {
+    return APS256XX_ERROR;
+  }
+  return APS256XX_OK;
+}
+
+
 /* ID Commands ****************************************************************/
 /**
   * @brief  Read Flash IDs.

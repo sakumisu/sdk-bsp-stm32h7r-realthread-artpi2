@@ -82,6 +82,8 @@ extern "C" {
 #define APS256XX_MR0_RLC_7              0x10U       /*!< Read Latency Code : 7               */
 
 #define APS256XX_MR0_LATENCY_TYPE       0x20U       /*!< Latency Type                        */
+#define APS256XX_MR0_LATENCY_TYPE_VARIABLE        0x00U       /*!< Latency Type Variable     */
+#define APS256XX_MR0_LATENCY_TYPE_FIXED           0x20U       /*!< Latency Type Fixed        */
 
 /* Mode Register 1 */
 #define APS256XX_MR1_ADDRESS            0x00000001U
@@ -160,10 +162,14 @@ extern "C" {
 #define APS256XX_MR8_BL_2K_BYTES        0x03U       /*!< Burst Length : 2K Byte/1K Word Wrap */
 
 #define APS256XX_MR8_BT                 0x04U       /*!< Burst Type                          */
+#define APS256XX_MR8_HYBRID_BURST_WRAP  0x04U       /*!< Burst Type                          */
+#define APS256XX_MR8_HYBRID_NONE_BURST_WRAP  0x00U  /*!< Burst Type                          */
 
 #define APS256XX_MR8_RBX                0x08U       /*!< Row Boundary Crossing Read Enable   */
 
 #define APS256XX_MR8_X8_X16             0x40U       /*!< IO X8/X16 Mode                      */
+#define APS256XX_MR8_X16                0x40U       /*!< IO X16 Mode                         */
+#define APS256XX_MR8_X8                 0x00U       /*!< IO X8  Mode                         */
 
 /******************************************************************************
   * @brief  APS256XX Commands
@@ -253,6 +259,7 @@ int32_t APS256XX_EnableMemoryMappedMode(XSPI_HandleTypeDef *Ctx, uint32_t ReadLa
 /* Register/Setting Commands **************************************************/
 int32_t APS256XX_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Value, uint32_t LatencyCode);
 int32_t APS256XX_WriteReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t Value);
+int32_t APS256XX_DumpReg(XSPI_HandleTypeDef *Ctx, uint8_t *regs, uint32_t LatencyCode);
 
 /* ID Commands ****************************************************************/
 int32_t APS256XX_ReadID(XSPI_HandleTypeDef *Ctx, uint8_t *ID, uint32_t LatencyCode);
