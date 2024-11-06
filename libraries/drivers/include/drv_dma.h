@@ -31,6 +31,7 @@ extern "C" {
 
 struct dma_config {
     DMA_INSTANCE_TYPE *Instance;
+    uint32_t request;  
     rt_uint32_t dma_rcc;
     IRQn_Type dma_irq;
 
