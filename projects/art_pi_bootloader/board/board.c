@@ -50,7 +50,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL2.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL2.PLLM = 3;
-  RCC_OscInitStruct.PLL2.PLLN = 50;
+  RCC_OscInitStruct.PLL2.PLLN = 50; //166:83 //133: 67
   RCC_OscInitStruct.PLL2.PLLP = 2;
   RCC_OscInitStruct.PLL2.PLLQ = 2;
   RCC_OscInitStruct.PLL2.PLLR = 2;
@@ -109,6 +109,7 @@ int clock_information(void)
     LOG_D("PCLK1_Frequency  = %d", HAL_RCC_GetPCLK1Freq());
     LOG_D("PCLK2_Frequency  = %d", HAL_RCC_GetPCLK2Freq());
     LOG_D("PLL2S_XSPI1_2_Frequency  = %d", HAL_RCC_GetPLL2SFreq());
+    LOG_D("PLL2T_Frequency  = %d", HAL_RCC_GetPLL2TFreq());
     return RT_EOK;
 }
 INIT_BOARD_EXPORT(clock_information);

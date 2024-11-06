@@ -77,8 +77,7 @@
 #define RT_USING_DEVICE_IPC
 #define RT_UNAMED_PIPE_NUMBER 64
 #define RT_USING_SERIAL
-#define RT_USING_SERIAL_V1
-#define RT_SERIAL_RB_BUFSZ 64
+#define RT_USING_SERIAL_V2
 #define RT_USING_SPI
 #define RT_USING_PIN
 
@@ -261,10 +260,12 @@
 #define BSP_USING_GPIO
 #define BSP_USING_UART
 #define BSP_USING_UART4
+#define BSP_UART4_RX_BUFSIZE 256
+#define BSP_UART4_TX_BUFSIZE 0
 
 /* External Libraries */
 
-#define FIRMWARE_EXEC_USING_QSPI_FLASH
+#define FIRMWARE_EXEC_USING_OSPI_FLASH
 #define RT_STUDIO_BUILT_IN
 
 /* Memory XIP Configs */

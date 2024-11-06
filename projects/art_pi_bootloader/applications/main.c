@@ -25,11 +25,8 @@
 #define LED_BLUE    GET_PIN(O, 1)
 #define LCD_BACKLIGHT    GET_PIN(G, 15)
 
-#define VECT_TAB_OFFSET      0x00000000UL
-#define APPLICATION_ADDRESS  (uint32_t)0x70000000
+#define APPLICATION_ADDRESS  XSPI2_BASE//(uint32_t)0x70000000
 
-typedef void (*pFunction)(void);
-pFunction JumpToApplication;
 
 XSPI_HandleTypeDef hxspi1;
 XSPI_HandleTypeDef hxspi2;
@@ -39,7 +36,7 @@ ADC_HandleTypeDef hadc1;
   * @param None
   * @retval None
   */
-static void MX_XSPI1_Init(void)
+static void MX_XSPI1_Init(void) //PSRAM
 {
 
   /* USER CODE BEGIN XSPI1_Init 0 */
@@ -53,16 +50,16 @@ static void MX_XSPI1_Init(void)
   /* USER CODE END XSPI1_Init 1 */
   /* XSPI1 parameter configuration*/
   hxspi1.Instance = XSPI1;
-  hxspi1.Init.FifoThresholdByte = 2U;
+  hxspi1.Init.FifoThresholdByte = 2;
   hxspi1.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
   hxspi1.Init.MemoryType = HAL_XSPI_MEMTYPE_APMEM_16BITS;
   hxspi1.Init.MemorySize = HAL_XSPI_SIZE_32GB;
-  hxspi1.Init.ChipSelectHighTimeCycle = 1U;
+  hxspi1.Init.ChipSelectHighTimeCycle = 1;
   hxspi1.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hxspi1.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
-  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
+  hxspi1.Init.WrapSize = HAL_XSPI_WRAP_32_BYTES;    			// HAL_XSPI_WRAP_NOT_SUPPORTED
   hxspi1.Init.ClockPrescaler = 0;
-  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
+  hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_HALFCYCLE; //HAL_XSPI_SAMPLE_SHIFT_NONE
   hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
   hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_8KB;
   hxspi1.Init.MaxTran = 0;
@@ -130,303 +127,12 @@ static void MX_XSPI2_Init(void)
 
 }
 
-  /* Size of buffers */
-#define BUFFERSIZE                              10240
-#define KByte                                   1024
-/* Buffer used for transmission */
-uint8_t aTxBuffer[BUFFERSIZE]; 
-__IO uint8_t *mem_addr;
-void mem_bench()
-{
-  uint16_t errorBuffer = 0;
-  uint32_t index, index_K;
-  /*fill aTxBuffer */
-  for (index_K = 0; index_K < 10; index_K++)
-  {
-    for (index = (index_K  * KByte); index < ((index_K +1) * KByte); index++)
-    {
-      aTxBuffer[index]=index + index_K;
-    }
-  }
-  /* Writing Sequence ----------------------------------------------- */
-  index_K=0;
-  for (index_K = 0; index_K < 10; index_K++)
-  {
-    mem_addr = (uint8_t *)(XSPI1_BASE + (index_K * KByte));
-    for (index = (index_K  * KByte); index < ((index_K +1) * KByte); index++)
-    {
-      *mem_addr = aTxBuffer[index];
-      mem_addr++;
-    }
-    
-    /* In memory-mapped mode, not possible to check if the memory is ready
-    after the programming. So a delay corresponding to max page programming
-    time is added */
-    HAL_Delay(1);
-  }
-  
-  /* Reading Sequence ----------------------------------------------- */
-  index_K=0;
-  for (index_K = 0; index_K < 2; index_K++)
-  {
-    mem_addr = (uint8_t *)(XSPI1_BASE + (index_K * KByte));
-    for (index = (index_K  * KByte); index < ((index_K +1) * KByte); index++)
-    {
-      if (*mem_addr != aTxBuffer[index])
-      {
-        rt_pin_write(LED_RED, PIN_HIGH);
-        errorBuffer++;
-      }
-      mem_addr++;
-    }
- 
-     /* In memory-mapped mode, not possible to check if the memory is ready
-    after the programming. So a delay corresponding to max page programming
-    time is added */
-    HAL_Delay(1);
-  }
-  if (errorBuffer == 0)
-  {
-    /* Turn GREEN on */
-    rt_pin_write(LED_RED, PIN_LOW);
-    rt_kprintf("PSRAM Test OK.\n");
-  }
-  else
-  { 
-      rt_kprintf("PSRAM Test fail %s times.\n", errorBuffer);
-  }
-  
-  /* Abort XSPI driver to stop the memory-mapped mode ------------ */
-//  if (HAL_XSPI_Abort(&hxspi1) != HAL_OK)
-//  {
-//    rt_kprintf("PSRAM Abort XSPI Fail..\n");
-//    Error_Handler();
-//  }
-    
-    
-}
-
-MSH_CMD_EXPORT(mem_bench,mem_bench)
-
-XSPI_MemoryMappedTypeDef sMemMappedCfg;
-
-  /* Read Operations */
-#define READ_CMD                                0x00
-#define READ_LINEAR_BURST_CMD                   0x20
-#define READ_HYBRID_BURST_CMD                   0x3F
-  
-  /* Write Operations */
-#define WRITE_CMD                               0x80
-#define WRITE_LINEAR_BURST_CMD                  0xA0
-#define WRITE_HYBRID_BURST_CMD                  0xBF
-  
-  /* Reset Operations */
-#define RESET_CMD                               0xFF
-  /* Registers definition */
-#define MR0                                     0x00000000
-#define MR1                                     0x00000001
-#define MR2                                     0x00000002
-#define MR3                                     0x00000003
-#define MR4                                     0x00000004
-#define MR8                                     0x00000008
-  
-  /* Register Operations */
-#define READ_REG_CMD                            0x40
-#define WRITE_REG_CMD                           0xC0
-
-  /* Default dummy clocks cycles */
-#define DUMMY_CLOCK_CYCLES_READ                 4
-#define DUMMY_CLOCK_CYCLES_WRITE                4
-  
-  /* Size of buffers */
-#define BUFFERSIZE                              10240
-#define KByte                                   1024
-
-/**
-* @brief  Write mode register
-* @param  Ctx Component object pointer
-* @param  Address Register address
-* @param  Value Register value pointer
-* @retval error status
-*/
-uint32_t APS256_WriteReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Value)
-{
-  XSPI_RegularCmdTypeDef sCommand1={0};
-  
-  /* Initialize the write register command */
-  sCommand1.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
-  sCommand1.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
-  sCommand1.InstructionWidth    = HAL_XSPI_INSTRUCTION_8_BITS;
-  sCommand1.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
-  sCommand1.Instruction        = WRITE_REG_CMD;
-  sCommand1.AddressMode        = HAL_XSPI_ADDRESS_8_LINES;
-  sCommand1.AddressWidth        = HAL_XSPI_ADDRESS_32_BITS;
-  sCommand1.AddressDTRMode     = HAL_XSPI_ADDRESS_DTR_ENABLE;
-  sCommand1.Address            = Address;
-  sCommand1.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
-  sCommand1.DataMode           = HAL_XSPI_DATA_8_LINES;
-  sCommand1.DataDTRMode        = HAL_XSPI_DATA_DTR_ENABLE;
-  sCommand1.DataLength         = 2;
-  sCommand1.DummyCycles        = 0;
-  sCommand1.DQSMode            = HAL_XSPI_DQS_DISABLE;
-  
-  /* Configure the command */
-  if (HAL_XSPI_Command(Ctx, &sCommand1, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  {
-    return HAL_ERROR;
-  }
-  
-  /* Transmission of the data */
-  if (HAL_XSPI_Transmit(Ctx, (uint8_t *)(Value), HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  {
-    return HAL_ERROR;
-  }
-  
-  return HAL_OK;
-}
-
-/**
-* @brief  Read mode register value
-* @param  Ctx Component object pointer
-* @param  Address Register address
-* @param  Value Register value pointer
-* @param  LatencyCode Latency used for the access
-* @retval error status
-*/
-uint32_t APS256_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Value, uint32_t LatencyCode)
-{
-  XSPI_RegularCmdTypeDef sCommand={0};
-  
-  /* Initialize the read register command */
-  sCommand.OperationType      = HAL_XSPI_OPTYPE_COMMON_CFG;
-  sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
-  sCommand.InstructionWidth    = HAL_XSPI_INSTRUCTION_8_BITS;
-  sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
-  sCommand.Instruction        = READ_REG_CMD;
-  sCommand.AddressMode        = HAL_XSPI_ADDRESS_8_LINES;
-  sCommand.AddressWidth        = HAL_XSPI_ADDRESS_32_BITS;
-  sCommand.AddressDTRMode     = HAL_XSPI_ADDRESS_DTR_ENABLE;
-  sCommand.Address            = Address;
-  sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
-  sCommand.DataMode           = HAL_XSPI_DATA_8_LINES;
-  sCommand.DataDTRMode        = HAL_XSPI_DATA_DTR_ENABLE;
-  sCommand.DataLength            = 2;
-  sCommand.DummyCycles        = (LatencyCode - 1U);
-  sCommand.DQSMode            = HAL_XSPI_DQS_ENABLE;
-  
-  /* Configure the command */
-  if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  {
-    return HAL_ERROR;
-  }
-  
-  /* Reception of the data */
-  if (HAL_XSPI_Receive(Ctx, (uint8_t *)Value, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  {
-    return HAL_ERROR;
-  }
-  
-  return HAL_OK;
-}
-/**
-* @brief  Switch from Octal Mode to Hexa Mode on the memory
-* @param  None
-* @retval None
-*/
-static void Configure_APMemory(void)
-{
-  /* MR0 register for read and write */
-  uint8_t regW_MR0[2]={0x27,0x8D}; /* To configure AP memory Latency Type and drive Strength */
-  uint8_t regR_MR0[2]={0};
-  
-  /* MR8 register for read and write */
-  uint8_t regW_MR8[2]={0x4B,0x08}; /* To configure AP memory Burst Type */
-  uint8_t regR_MR8[2]={0};
-  
-  /*Read Latency */
-  uint8_t latency=6;
-  
-  /* Configure Read Latency and drive Strength */
-  if (APS256_WriteReg(&hxspi1, MR0, regW_MR0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Check MR0 configuration */
-  if (APS256_ReadReg(&hxspi1, MR0, regR_MR0, latency ) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Check MR0 configuration */
-  if (regR_MR0 [0] != regW_MR0 [0])
-  {
-    Error_Handler() ;
-  }
-  
-  /* Configure Burst Length */
-  if (APS256_WriteReg(&hxspi1, MR8, regW_MR8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Check MR8 configuration */
-  if (APS256_ReadReg(&hxspi1, MR8, regR_MR8, 6) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  if (regR_MR8[0] != regW_MR8[0])
-  {
-    Error_Handler() ;
-  }
-}
-
-/* Definitions of environment analog values */
-  /* Value of analog reference voltage (Vref+), connected to analog voltage   */
-  /* supply Vdda (unit: mV).                                                  */
-  #define VDDA_APPLI                       (3300UL)
-
-/* Definitions of data related to this example */
-  /* Init variable out of expected ADC conversion data range */
-  #define VAR_CONVERTED_DATA_INIT_VALUE    (__LL_ADC_DIGITAL_SCALE(LL_ADC_RESOLUTION_12B) + 1)
-
-
-const static uint16_t hardware_vol_rank[8] = 
-{
-  50,   // less than 50mV, fail
-  75,   // 50-75 (normally 65mV) HW=0.1, BOM=0.1
-  90,
-  65535,
-  65535,
-  65535,
-  65535,
-  65535,
-};
-
-const static uint16_t hardware_ver_rank[8] = 
-{
-  0x0101, //HW 0.1, BOM 0.1
-  0x0201,
-  0x0202,
-  0x1010,
-  0x1011,
-  0xFFFF,
-  0xFFFF,
-  0xFFFF,
-};
-
-int mJumpToApplication(void)
+int JumpToApplication(void)
 {
   uint32_t primask_bit;
   typedef  void (*pFunction)(void);
   pFunction JumpToApp;
-  uint32_t Application_vector;
-
-//  if (EXTMEM_OK != EXTMEM_GetMapAddress(EXTMEM_MEMORY_BOOTXIP, &Application_vector))
-//  {
-//      return BOOT_ERROR_INCOMPATIBLEMEMORY;
-//  }
+  uint32_t Application_vector = APPLICATION_ADDRESS;
 
   /* Suspend SysTick */
   HAL_SuspendTick();
@@ -469,12 +175,18 @@ int main(void)
     XSPI_RegularCmdTypeDef sCommand = {0};
     int retr=0;
 
+    uint32_t ReadLatencyCode = 7;
+    uint32_t WriteLatencyCode =7;
+    XSPI_HSCalTypeDef cal = {0};
+
     /* set LED0 pin mode to output */
     rt_pin_mode(LED_RED, PIN_MODE_OUTPUT);
     rt_pin_mode(LCD_BACKLIGHT, PIN_MODE_OUTPUT);
     MX_XSPI1_Init();
     MX_XSPI2_Init();
 
+    HAL_XSPI_GetDelayValue(&hxspi1, &cal);
+    LOG_W("cal delay: 0x%.2x, fine: 0x%.2x, coarse 0x%.2x, max 0x%.2x", cal.DelayValueType, cal.FineCalibrationUnit, cal.CoarseCalibrationUnit, cal.MaxCalibration);
     if(W35T51NWTBIE_OK != W35T51NWTBIE_ReadID(&hxspi2, 
                                             W35T51NWTBIE_SPI_MODE, 
                                             W35T51NWTBIE_STR_TRANSFER, 
@@ -502,92 +214,80 @@ int main(void)
         }
     }
 
-//    MX66UW_Init();
-    /* enable the region corresponding to the memory */
+    if(W35T51NWTBIE_OK != W35T51NWTBIE_EnableMemoryMappedModeDTR(&hxspi2, RT_NULL))
     {
-      /* Enter critical section to lock the system and avoid any issue around MPU mechanism */
-      MPU_Region_InitTypeDef default_config = {0};
-      uint32_t primask_bit = __get_PRIMASK();
-      __disable_irq();
-
-      /* disable the MPU */
-      HAL_MPU_Disable();
-
-      /* Create a region associated with memory address 0x70000000 */
-      /* TEX=1, Normal memory type, code execution allowed */
-      default_config.Enable = MPU_REGION_ENABLE;
-      default_config.Number = 1;
-      default_config.BaseAddress = 0x70000000;
-      default_config.Size = MPU_REGION_SIZE_128MB;
-      default_config.SubRegionDisable = 0;
-      default_config.TypeExtField = MPU_TEX_LEVEL1;
-      default_config.AccessPermission = MPU_REGION_FULL_ACCESS;
-      default_config.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-      default_config.IsShareable = MPU_ACCESS_SHAREABLE;
-      default_config.IsCacheable = MPU_ACCESS_CACHEABLE;
-      default_config.IsBufferable = MPU_ACCESS_BUFFERABLE;
-      HAL_MPU_ConfigRegion(&default_config);
-
-      /* enable the MPU */
-      HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-
-      /* Exit critical section to lock the system and avoid any issue around MPU mechanisme */
-      __set_PRIMASK(primask_bit);
+        LOG_E("XIP octal failed");
+        return -1;
     }
 
-    W35T51NWTBIE_EnableMemoryMappedModeDTR(&hxspi2, RT_NULL);
-//#ifndef FIRMWARE_EXEC_USING_QEMU
-//    W25QXX_Init();
-//    W25Q_Memory_Mapped_Enable();
-//#endif
+    /* Configure the 16-bits Octal RAM memory ***************************/
+    uint8_t reg[2];
 
-  //   Configure_APMemory();
-  // /*Configure Memory Mapped mode*/
-  
-  //   sCommand.OperationType      = HAL_XSPI_OPTYPE_WRITE_CFG;
-  //   sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_8_LINES;
-  //   sCommand.InstructionWidth   = HAL_XSPI_INSTRUCTION_8_BITS;
-  //   sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
-  //   sCommand.Instruction        = WRITE_CMD;
-  //   sCommand.AddressMode        = HAL_XSPI_ADDRESS_8_LINES;
-  //   sCommand.AddressWidth       = HAL_XSPI_ADDRESS_32_BITS;
-  //   sCommand.AddressDTRMode     = HAL_XSPI_ADDRESS_DTR_ENABLE;
-  //   sCommand.Address            = 0x0;
-  //   sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
-  //   sCommand.DataMode           = HAL_XSPI_DATA_16_LINES;
-  //   sCommand.DataDTRMode        = HAL_XSPI_DATA_DTR_ENABLE;
-  //   sCommand.DataLength         = BUFFERSIZE;
-  //   sCommand.DummyCycles        = DUMMY_CLOCK_CYCLES_WRITE;
-  //   sCommand.DQSMode            = HAL_XSPI_DQS_ENABLE;
+    if(APS256XX_OK != APS256XX_Reset(&hxspi1))
+    {
+        LOG_E("PSRAM Reset error");
+    }
+    rt_thread_mdelay(20);
 
-  //   if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //   Error_Handler();
-  //   }
-
-  //   sCommand.OperationType = HAL_XSPI_OPTYPE_READ_CFG;
-  //   sCommand.Instruction = READ_CMD;
-  //   sCommand.DummyCycles = DUMMY_CLOCK_CYCLES_READ;
-  //   sCommand.DQSMode     = HAL_XSPI_DQS_ENABLE;
-
-  //   if (HAL_XSPI_Command(&hxspi1, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //   Error_Handler();
-  //   }
-
-  //   sMemMappedCfg.TimeOutActivation = HAL_XSPI_TIMEOUT_COUNTER_ENABLE;
-  //   sMemMappedCfg.TimeoutPeriodClock      = 0x34;
-
-
-  //   if (HAL_XSPI_MemoryMapped(&hxspi1, &sMemMappedCfg) != HAL_OK)
-  //   {
-  //   Error_Handler();
-  //   }
-
-extern int32_t HSPI_RAM_XIP(void);
-
-    HSPI_RAM_XIP();
     
+    if (APS256XX_OK == APS256XX_ReadReg(&hxspi1, APS256XX_MR0_ADDRESS, reg, 5))
+    {
+        LOG_I("PSRAM MR0: 0x%.2x, MR1: 0x%.2x", reg[0], reg[1]);
+    }
+
+
+    MODIFY_REG(reg[0], ((uint8_t)APS256XX_MR0_LATENCY_TYPE | (uint8_t)APS256XX_MR0_READ_LATENCY_CODE |
+                        (uint8_t)APS256XX_MR0_DRIVE_STRENGTH),
+                ((uint8_t) APS256XX_MR0_LATENCY_TYPE_FIXED| (uint8_t)APS256XX_MR0_RLC_7 | (uint8_t)APS256XX_MR0_DS_HALF));
+    if (APS256XX_OK == APS256XX_WriteReg(&hxspi1, APS256XX_MR0_ADDRESS, reg[0]))
+    {
+        LOG_I("PSRAM MR0 SET");
+        // return APS256XX_ERROR;
+    }
+
+    MODIFY_REG(reg[0], (uint8_t)(APS256XX_MR4_WRITE_LATENCY_CODE | APS256XX_MR4_RF_RATE | APS256XX_MR4_PASR),
+                ((uint8_t)APS256XX_MR4_WLC_7 | APS256XX_MR4_RF_1X | APS256XX_MR4_PASR_FULL));
+    if (APS256XX_OK == APS256XX_WriteReg(&hxspi1, APS256XX_MR4_ADDRESS, reg[0]))
+    {
+        LOG_I("PSRAM MR4 SET");
+        // return APS256XX_ERROR;
+    }
+
+    MODIFY_REG(reg[0], ((uint8_t)APS256XX_MR8_X8_X16 | (uint8_t)APS256XX_MR8_RBX | (uint8_t)APS256XX_MR8_BT | (uint8_t)APS256XX_MR8_BL),
+                ((uint8_t)APS256XX_MR8_HYBRID_BURST_WRAP| (uint8_t)APS256XX_MR8_X16 | (uint8_t)APS256XX_MR8_BL_32_BYTES));
+    if (APS256XX_OK == APS256XX_WriteReg(&hxspi1, APS256XX_MR8_ADDRESS, reg[0]))
+    {
+        LOG_I("PSRAM MR8 SET");
+        // return APS256XX_ERROR;
+    }
+
+    HAL_XSPI_GetDelayValue(&hxspi1, &cal);
+    LOG_W("cal delay: 0x%.2x, fine: 0x%.2x, coarse 0x%.2x, max 0x%.2x", cal.DelayValueType, cal.FineCalibrationUnit, cal.CoarseCalibrationUnit, cal.MaxCalibration);
+
+    if (APS256XX_OK == APS256XX_ReadReg(&hxspi1, APS256XX_MR0_ADDRESS, reg, 7))
+    {
+        LOG_I("PSRAM MR0: 0x%.2x, MR1: 0x%.2x", reg[0], reg[1]);
+    }
+    if (APS256XX_OK == APS256XX_ReadReg(&hxspi1, APS256XX_MR4_ADDRESS, reg, 7))
+    {
+        LOG_I("PSRAM MR4: 0x%.2x, MR5: 0x%.2x", reg[0], reg[1]);
+    }
+    if (APS256XX_OK == APS256XX_ReadReg(&hxspi1, APS256XX_MR8_ADDRESS, reg, 7))
+    {
+        LOG_I("PSRAM MR8: 0x%.2x, MR1: 0x%.2x", reg[0], reg[1]);
+    }
+
+    HAL_XSPI_GetDelayValue(&hxspi1, &cal);
+    LOG_W("cal delay: 0x%.2x, fine: 0x%.2x, coarse 0x%.2x, max 0x%.2x", cal.DelayValueType, cal.FineCalibrationUnit, cal.CoarseCalibrationUnit, cal.MaxCalibration);
+    /*Configure Memory Mapped mode*/
+    if (APS256XX_OK != APS256XX_EnableMemoryMappedMode(&hxspi1, ReadLatencyCode, WriteLatencyCode, HAL_XSPI_DATA_16_LINES, 0))   // Liner Burst
+    {
+        LOG_E("PSRAM Enter XIP Failed");
+    }
+
+/* enable the region corresponding to the memory */
+extern int mpu_init(void);
+    mpu_init();
 //    SCB_DisableICache();
 //    SCB_DisableDCache();
     rt_kprintf("\nJump to APP...\n");
@@ -599,11 +299,6 @@ extern int32_t HSPI_RAM_XIP(void);
 //        rt_pin_write(LED_RED, PIN_LOW);
 //        rt_thread_mdelay(500);
 //    }
-
-    SysTick->CTRL = 0;
-
-    JumpToApplication = (pFunction)(*(__IO uint32_t *)(APPLICATION_ADDRESS + 4));
-    __set_MSP(*(__IO uint32_t *)APPLICATION_ADDRESS);
 
     JumpToApplication();
 

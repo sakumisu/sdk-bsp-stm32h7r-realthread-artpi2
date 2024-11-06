@@ -115,7 +115,7 @@ RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   HAL_SBS_EnableIOSpeedOptimize(SBS_IO_XSPI2_HSLV);
 
   /* USER CODE BEGIN MspInit 1 */
-
+  HAL_PWREx_EnableUSBHSregulator();
   /* USER CODE END MspInit 1 */
 }
 

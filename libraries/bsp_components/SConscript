@@ -14,10 +14,10 @@ if GetDepend(['BSP_USING_W35T51NW_OSPI_FLASH']):
     path += [cwd + '/w35t51nwtbie']
 
 if GetDepend(['BSP_USING_APS256XX_HSPI_PSRAM']):
-    src += ['hspi/stm32h7rsxx_hspi.c']
     src += ['aps256xx/aps256xx.c']
     path += [cwd + '/aps256xx']
-    path += [cwd + '/hspi']
+    # src += ['hspi/stm32h7rsxx_hspi.c']
+    # path += [cwd + '/hspi']
 
 
 # CPPDEFINES = ['USE_HAL_DRIVER']
