@@ -288,6 +288,20 @@ menu "On-chip Peripheral"
         select RT_USING_MEMHEAP
         default n
 
+        if BSP_USING_LCD
+            choice
+                prompt "Choose LCD Type to config screen parameters and clock timing"
+                default BSP_USING_LCD_800_RGB
+                        config BSP_USING_OLED_454_MIPI
+                        bool "RT-Thread AMOLED 1.44 inch screen, 454*454 bridged by SSD2828"
+                        config BSP_USING_LCD_800_RGB
+                        bool "RT-Thread or atk 4.3 inch screen, 800*480 "
+                        config BSP_USING_LCD_360_REDUCED
+                        bool "RT-Thread or atk 4.3 inch screen, 800*480 , window to 360*360"
+                        config BSP_USING_LCD_454_REDUCED
+                        bool "RT-Thread or atk 4.3 inch screen, 800*480 , window to 454*454"
+            endchoice
+        endif
     config BSP_USING_DCMI
         bool "Enable DCMI"
         default n

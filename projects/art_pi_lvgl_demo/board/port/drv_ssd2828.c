@@ -8,7 +8,9 @@
  * 2021-08-21     stackRyan    first version
  * 2022-02-17     stackRyan    migrant to rtt's drv_spi
  */
-#include <rtthread.h>
+#include <board.h>
+#ifdef BSP_USING_OLED_454_MIPI
+
 #include <rtdevice.h>
 #include <rthw.h>
 #include "drv_ssd2828.h"
@@ -460,4 +462,5 @@ void ssd2828_shutdown(FunctionalState state)
     //  SSD2828_SHUT = (uint8_t)state & 0x01;
 }
 
+#endif /* BSP_USING_OLED_454_MIPI */
 /***** END OF FILE *****/
