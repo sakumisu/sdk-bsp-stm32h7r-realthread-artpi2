@@ -30,11 +30,11 @@ void system_clock_config(int target_freq_mhz)
 //  HAL_PWREx_EnableXSPIM1();
 
   /* Enable USB Voltage detector */
-  if(HAL_PWREx_EnableUSBVoltageDetector() != HAL_OK)
-  {
-   /* Initialization error */
-   Error_Handler();
-  }
+//   if(HAL_PWREx_EnableUSBVoltageDetector() != HAL_OK)
+//   {
+//    /* Initialization error */
+//    Error_Handler();
+//   }
 }
 int clock_information(void)
 {
