@@ -124,12 +124,9 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
     /* Initialization error */
     Error_Handler();
     }
-    /* enable interrupt */
-    __set_PRIMASK(0);
+
     /* System clock initialization */
     clk_init(clock_src, clock_src_freq, clock_target_freq);
-    /* disbale interrupt */
-    __set_PRIMASK(1);
 
     rt_hw_systick_init();
 
