@@ -288,8 +288,8 @@ int32_t APS256XX_EnableMemoryMappedMode(XSPI_HandleTypeDef *Ctx, uint32_t ReadLa
   }
 
   /* Activation of memory-mapped mode */
-  sMemMappedCfg.TimeOutActivation = HAL_XSPI_TIMEOUT_COUNTER_DISABLE;
-
+  sMemMappedCfg.TimeOutActivation  = HAL_XSPI_TIMEOUT_COUNTER_ENABLE;
+  sMemMappedCfg.TimeoutPeriodClock = 396;
   if (HAL_XSPI_MemoryMapped(Ctx, &sMemMappedCfg) != HAL_OK)
   {
     return APS256XX_ERROR;

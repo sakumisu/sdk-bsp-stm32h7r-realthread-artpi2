@@ -317,6 +317,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
 }
 
 static uint32_t HAL_RCC_XSPIM_CLK_ENABLED=0;
+static uint32_t HAL_RCC_XSPI2_CLK_CHANGE=0;
 
 /**
 * @brief XSPI MSP Initialization
@@ -398,22 +399,35 @@ void HAL_XSPI_MspInit(XSPI_HandleTypeDef* hxspi)
   else if(hxspi->Instance==XSPI2)
   {
   /* USER CODE BEGIN XSPI2_MspInit 0 */
-
-  /* USER CODE END XSPI2_MspInit 0 */
-
-  /** Initializes the peripherals clock
-  */
+  if (HAL_RCC_XSPI2_CLK_CHANGE == 0)
+  {
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI2;
+    PeriphClkInit.Xspi2ClockSelection = RCC_XSPI2CLKSOURCE_PLL2T;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    HAL_RCC_XSPI2_CLK_CHANGE++;
+  }
+  else
+  {
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_XSPI2;
     PeriphClkInit.Xspi2ClockSelection = RCC_XSPI2CLKSOURCE_PLL2S;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
     {
       Error_Handler();
     }
+  }
 
-    /* Peripheral clock enable */
-    HAL_RCC_XSPIM_CLK_ENABLED++;
-    if(HAL_RCC_XSPIM_CLK_ENABLED==1){
-      __HAL_RCC_XSPIM_CLK_ENABLE();
+  /* USER CODE END XSPI2_MspInit 0 */
+
+  /** Initializes the peripherals clock
+   */
+  /* Peripheral clock enable */
+  HAL_RCC_XSPIM_CLK_ENABLED++;
+  if (HAL_RCC_XSPIM_CLK_ENABLED == 1)
+  {
+    __HAL_RCC_XSPIM_CLK_ENABLE();
     }
     __HAL_RCC_XSPI2_CLK_ENABLE();
 
