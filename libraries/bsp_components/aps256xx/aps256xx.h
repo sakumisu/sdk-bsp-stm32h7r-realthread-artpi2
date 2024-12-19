@@ -166,6 +166,7 @@ extern "C" {
 #define APS256XX_MR8_HYBRID_NONE_BURST_WRAP  0x00U  /*!< Burst Type                          */
 
 #define APS256XX_MR8_RBX                0x08U       /*!< Row Boundary Crossing Read Enable   */
+#define APS256XX_MR8_RBX_NOT_SUPPORT    0x00U       /*!< Row Boundary Crossing not support   */
 
 #define APS256XX_MR8_X8_X16             0x40U       /*!< IO X8/X16 Mode                      */
 #define APS256XX_MR8_X16                0x40U       /*!< IO X16 Mode                         */

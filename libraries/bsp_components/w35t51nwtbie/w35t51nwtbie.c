@@ -1497,48 +1497,125 @@ int32_t W35T51NWTBIE_EnterOctal_DTR_Mode(XSPI_HandleTypeDef *Ctx)
     }
   }
 
-  // {
-  //   /* Write Configuration register 2 (with Octal I/O SPI protocol) */
-  //   sCommand.Instruction = 0xB7;     // Enable 4byte Address 1-0-0
-  //   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
-  //   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
+  {
+    sCommand.Instruction = W35T51NWTBIE_WRITE_VOLATILE_CFG_REG_CMD;    //set 22 dummy cycles for fast read
+    sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_1_LINE;
+    sCommand.InstructionWidth    = HAL_XSPI_INSTRUCTION_8_BITS;
+    sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+    sCommand.AddressMode = HAL_XSPI_ADDRESS_1_LINE;
+    sCommand.Address            = 0x1;
+    sCommand.AddressWidth        = HAL_XSPI_ADDRESS_24_BITS;
+    sCommand.AddressDTRMode     = HAL_XSPI_ADDRESS_DTR_DISABLE;
+    sCommand.DataMode    = HAL_XSPI_DATA_1_LINE;
+    sCommand.DataDTRMode        = HAL_XSPI_DATA_DTR_DISABLE;
+    sCommand.DataLength         = 1;
+    sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+    sCommand.DummyCycles        = 0;
+    sCommand.DQSMode            = HAL_XSPI_DQS_DISABLE;
+
+    reg = 0x16;   // 22 dummy cycles
+
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -8;
+    }
     
-  //   if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //     retr = -4;
-  //   }
-  // }
+    if (HAL_XSPI_Transmit(Ctx, &reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -9;
+    }
 
-  // {
-  //   /* Enable write operations */
-  //   sCommand.Instruction = W35T51NWTBIE_WRITE_ENABLE_CMD;    // 1-0-0
-  //   sCommand.DataMode    = HAL_XSPI_DATA_NONE;
-  //   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
+  }
 
-  //   if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //     retr = -5;
-  //   }
+    {
+    /* Enable write operations */
+    sCommand.Instruction = W35T51NWTBIE_WRITE_ENABLE_CMD;    // 1-0-0
+    sCommand.DataMode    = HAL_XSPI_DATA_NONE;
+    sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
 
-  //   /* Reconfigure XSPI to automatic polling mode to wait for write enabling */
-  //   sConfig.MatchMask           = 0x02;
-  //   sConfig.MatchValue          = 0x02;
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -1;
+    }
 
-  //   sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
-  //   sCommand.Instruction    = W35T51NWTBIE_READ_STATUS_REG_CMD;  // 1-0-1
-  //   sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
-  //   sCommand.DataLength         = 1;
+    /* Reconfigure XSPI to automatic polling mode to wait for write enabling */
+    sConfig.MatchMask           = 0x02;
+    sConfig.MatchValue          = 0x02;
     
-  //   if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //     retr = -6;
-  //   }
+    sCommand.Instruction    = W35T51NWTBIE_READ_STATUS_REG_CMD;  // 1-0-1
+    sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
+    sCommand.DataLength         = 1;
+    
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -2;
+    }
 
-  //   if (HAL_XSPI_AutoPolling(Ctx, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-  //   {
-  //     retr = -7;
-  //   }
-  // }
+    if (HAL_XSPI_AutoPolling(Ctx, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -3;
+    }
+  }
+
+  {
+    sCommand.Instruction = W35T51NWTBIE_WRITE_VOLATILE_CFG_REG_CMD;    //set impedence of driver strength
+    sCommand.InstructionMode    = HAL_XSPI_INSTRUCTION_1_LINE;
+    sCommand.InstructionWidth    = HAL_XSPI_INSTRUCTION_8_BITS;
+    sCommand.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+    sCommand.AddressMode = HAL_XSPI_ADDRESS_1_LINE;
+    sCommand.Address            = 0x03;
+    sCommand.AddressWidth        = HAL_XSPI_ADDRESS_24_BITS;
+    sCommand.AddressDTRMode     = HAL_XSPI_ADDRESS_DTR_DISABLE;
+    sCommand.DataMode    = HAL_XSPI_DATA_1_LINE;
+    sCommand.DataDTRMode        = HAL_XSPI_DATA_DTR_DISABLE;
+    sCommand.DataLength         = 1;
+    sCommand.AlternateBytesMode = HAL_XSPI_ALT_BYTES_NONE;
+    sCommand.DummyCycles        = 0;
+    sCommand.DQSMode            = HAL_XSPI_DQS_DISABLE;
+
+    reg = 0xFF;   // 50R
+
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -8;
+    }
+    
+    if (HAL_XSPI_Transmit(Ctx, &reg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -9;
+    }
+
+  }
+
+  {
+    /* Enable write operations */
+    sCommand.Instruction = W35T51NWTBIE_WRITE_ENABLE_CMD;    // 1-0-0
+    sCommand.DataMode    = HAL_XSPI_DATA_NONE;
+    sCommand.AddressMode = HAL_XSPI_ADDRESS_NONE;
+
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -1;
+    }
+
+    /* Reconfigure XSPI to automatic polling mode to wait for write enabling */
+    sConfig.MatchMask           = 0x02;
+    sConfig.MatchValue          = 0x02;
+    
+    sCommand.Instruction    = W35T51NWTBIE_READ_STATUS_REG_CMD;  // 1-0-1
+    sCommand.DataMode       = HAL_XSPI_DATA_1_LINE;
+    sCommand.DataLength         = 1;
+    
+    if (HAL_XSPI_Command(Ctx, &sCommand, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -2;
+    }
+
+    if (HAL_XSPI_AutoPolling(Ctx, &sConfig, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+    {
+      retr = -3;
+    }
+  }
 
   {
     sCommand.Instruction = W35T51NWTBIE_WRITE_VOLATILE_CFG_REG_CMD;    // 1-1-1
@@ -1647,7 +1724,7 @@ int32_t W35T51NWTBIE_EnableMemoryMappedModeDTR(XSPI_HandleTypeDef *Ctx, W35T51NW
     s_command.OperationType = HAL_XSPI_OPTYPE_READ_CFG;
     s_command.Instruction = W35T51NWTBIE_OCTA_READ_DTR_CMD;
     // s_command.Instruction = XSPI_FormatCommand(hXspi->commandExtension, s_command.InstructionWidth, CommandRead);
-    s_command.DummyCycles = 16;
+    s_command.DummyCycles = 22;   // 22 for 200Mhz ODDR mode.
     /* Configure the read command */
     retr = HAL_XSPI_Command(Ctx, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE);
     if (retr != HAL_OK)
@@ -1686,4 +1763,62 @@ int32_t W35T51NWTBIE_DisableMemoryMappedMode(XSPI_HandleTypeDef *Ctx)
 {
   __DSB();
   return HAL_XSPI_Abort(Ctx);
+}
+
+int32_t W35T51NWTBIE_EnableMemoryMappedModeSDR(XSPI_HandleTypeDef *Ctx, W35T51NWTBIE_Interface_t Mode)
+{
+    HAL_StatusTypeDef retr;
+    XSPI_RegularCmdTypeDef s_command = {0};
+    XSPI_MemoryMappedTypeDef sMemMappedCfg = {0};
+
+    /* Initialize the s_command */
+    s_command.InstructionMode = HAL_XSPI_INSTRUCTION_1_LINE;
+    s_command.InstructionWidth = HAL_XSPI_INSTRUCTION_8_BITS;
+    s_command.InstructionDTRMode = HAL_XSPI_INSTRUCTION_DTR_DISABLE;
+
+    s_command.AddressMode = HAL_XSPI_ADDRESS_1_LINE;
+    s_command.AddressWidth = HAL_XSPI_ADDRESS_32_BITS;
+    s_command.AddressDTRMode = HAL_XSPI_ADDRESS_DTR_DISABLE;
+
+    s_command.DataMode = HAL_XSPI_DATA_1_LINE;
+    s_command.DataDTRMode = HAL_XSPI_DATA_DTR_DISABLE;
+    s_command.DQSMode = HAL_XSPI_DQS_DISABLE;
+
+    /* Initialize the read ID command */
+    s_command.OperationType = HAL_XSPI_OPTYPE_READ_CFG;
+    s_command.Instruction = W35T51NWTBIE_FAST_READ_CMD;
+    // s_command.Instruction = XSPI_FormatCommand(hXspi->commandExtension, s_command.InstructionWidth, CommandRead);
+    s_command.DummyCycles = 16;
+    /* Configure the read command */
+    retr = HAL_XSPI_Command(Ctx, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE);
+    if (retr != HAL_OK)
+    {
+        goto error;
+    }
+
+    /* Initialize the read ID command */
+    s_command.OperationType = HAL_XSPI_OPTYPE_WRITE_CFG;
+    s_command.Instruction = W35T51NWTBIE_OCTA_PAGE_PROG_CMD;
+    // s_command.Instruction = XSPI_FormatCommand(hXspi->commandExtension, s_command.InstructionWidth, CommandWrite);
+    s_command.DummyCycles = 4;
+    /* Configure the read command */
+    retr = HAL_XSPI_Command(Ctx, &s_command, HAL_XSPI_TIMEOUT_DEFAULT_VALUE);
+    if (retr != HAL_OK)
+    {
+        goto error;
+    }
+
+    /* Activation of memory-mapped mode */
+    sMemMappedCfg.TimeOutActivation = HAL_XSPI_TIMEOUT_COUNTER_DISABLE;
+    sMemMappedCfg.TimeoutPeriodClock = 0x50;
+    retr = HAL_XSPI_MemoryMapped(Ctx, &sMemMappedCfg);
+
+error:
+    if (retr != HAL_OK)
+    {
+        /* abort any ongoing transaction for the next action */
+        (void)HAL_XSPI_Abort(Ctx);
+    }
+    /* return status */
+    return retr;
 }
