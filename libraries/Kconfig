@@ -11,6 +11,17 @@ config SOC_SERIES_STM32H7RS
     select SOC_FAMILY_STM32
     default y
 
+menuconfig RT_USING_INDEPENDENT_INTERRUPT_MANAGEMENT
+    bool "Enable independent interrupt management"
+    default n
+
+    if RT_USING_INDEPENDENT_INTERRUPT_MANAGEMENT
+        config RT_MAX_SYSCALL_INTERRUPT_PRIORITY
+            int "Set max syscall interrupt priority"
+            range 0 7
+            default 6
+    endif
+
 menu "Onboard Peripheral Drivers"
 
     config BSP_USING_USB_TO_USART
@@ -33,29 +44,11 @@ menu "Onboard Peripheral Drivers"
         select RT_USING_SAL
         default n
 
-    config BSP_USING_OV2640
-        bool "Enable camera (ov2640)"
-        select BSP_USING_DCMI
-        select BSP_USING_I2C
-        select BSP_USING_I2C2
-        default n
-
-    config BSP_USING_GC0328C
-        bool "Enable camera (gc0328)"
-        select BSP_USING_DCMI
-        select BSP_USING_I2C
-        select BSP_USING_I2C2
-        default n
-
     menuconfig BSP_USING_LVGL
         bool "Enable LVGL for LCD"
         select PKG_USING_LVGL
         default n
-        if BSP_USING_LVGL      
-            config BSP_USING_ILI9488
-                bool "Enable LVGL for LCD_ILI9488"
-                select BSP_USING_SPI_LCD_ILI9488
-                default n
+        if BSP_USING_LVGL
             config BSP_USING_LCD_RGB
                 bool "Enable LVGL for LCD_RGB565"
                 select BSP_USING_LCD
@@ -68,17 +61,17 @@ menu "Onboard Peripheral Drivers"
                     select BSP_USING_I2C2
                     select RT_USING_TOUCH
                     default n
-
                 if BSP_USING_TOUCH
                     choice
                         prompt "Choose Touch Driver"
                         default BSP_USING_GT9147
                                 config BSP_USING_GT9147
-                                bool "USING Touch IC GT9147"
+                                    select PKG_USING_GT9147
+                                    bool "USING Touch IC GT9147"
 
-                                config BSP_USING_GT1151
-                                bool "USING Touch IC GT1151 GT1158"
-
+                                config BSP_USING_GT911
+                                    select PKG_USING_GT911
+                                    bool "USING Touch IC GT1151 GT1158"
                             default n
                     endchoice
                 endif
@@ -404,27 +397,17 @@ menu "External Libraries"
         select RT_USING_WIFI
         default n
 
-    config ART_PI_USING_OTA_LIB
-        bool "Using RT-Thread OTA Library"
-        select RT_USING_FAL
-        select FAL_USING_SFUD_PORT
-        select RT_USING_SFUD
-        select RT_USING_RYM
-        default n
-
     config ART_PI_TouchGFX_LIB
         bool "Using TouchGFX Library"
-        select BSP_USING_LCD
         select RT_USING_CPLUSPLUS
+        select RT_USING_MEMHEAP
+        select RT_USING_TOUCH
+        select RT_TOUCH_PIN_IRQ
+        select BSP_USING_PSRAM
+        select BSP_USING_I2C
+        select BSP_USING_I2C2
+        select PKG_USING_GT911
         default n
-    
-    config ART_PI_USING_FTP_LIB
-        bool "Using FTP Library"
-        select RT_USING_SAL
-        select SAL_USING_POSIX
-        select RT_USING_DFS
-        default n
-
 endmenu
 
 choice
@@ -433,8 +416,5 @@ choice
 
     config FIRMWARE_EXEC_USING_OSPI_FLASH
         bool "OSPI Flash"
-
-    config FIRMWARE_EXEC_USING_QEMU
-        bool "QEMU"
 
 endchoice

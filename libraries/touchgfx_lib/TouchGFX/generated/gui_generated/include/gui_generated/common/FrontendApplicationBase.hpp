@@ -15,16 +15,73 @@ public:
     FrontendApplicationBase(Model& m, FrontendHeap& heap);
     virtual ~FrontendApplicationBase() { }
 
-    // Main
-    void gotoMainScreenNoTransition();
+    virtual void changeToStartScreen()
+    {
+        gotoMenuScreenNoTransition();
+    }
+
+    // Menu
+    void gotoMenuScreenNoTransition();
+
+    void gotoMenuScreenWipeTransitionNorth();
+
+    void gotoMenuScreenWipeTransitionSouth();
+
+    void gotoMenuScreenWipeTransitionWest();
+
+    void gotoMenuScreenWipeTransitionEast();
+
+    // SVG
+    void gotoSVGScreenWipeTransitionSouth();
+
+    // DiceDemo
+    void gotoDiceDemoScreenWipeTransitionNorth();
+
+    // MJPEG
+    void gotoMJPEGScreenWipeTransitionEast();
+
+    // CompassScreen
+    void gotoCompassScreenScreenWipeTransitionWest();
+
+    // E_BikeDemo
+    void gotoE_BikeDemoScreenWipeTransitionNorth();
+
+    // ScreenTransitionDemo
+    void gotoScreenTransitionDemoScreenWipeTransitionSouth();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // Main
-    void gotoMainScreenNoTransitionImpl();
+    // Menu
+    void gotoMenuScreenNoTransitionImpl();
+
+    void gotoMenuScreenWipeTransitionNorthImpl();
+
+    void gotoMenuScreenWipeTransitionSouthImpl();
+
+    void gotoMenuScreenWipeTransitionWestImpl();
+
+    void gotoMenuScreenWipeTransitionEastImpl();
+
+    // SVG
+    void gotoSVGScreenWipeTransitionSouthImpl();
+
+    // DiceDemo
+    void gotoDiceDemoScreenWipeTransitionNorthImpl();
+
+    // MJPEG
+    void gotoMJPEGScreenWipeTransitionEastImpl();
+
+    // CompassScreen
+    void gotoCompassScreenScreenWipeTransitionWestImpl();
+
+    // E_BikeDemo
+    void gotoE_BikeDemoScreenWipeTransitionNorthImpl();
+
+    // ScreenTransitionDemo
+    void gotoScreenTransitionDemoScreenWipeTransitionSouthImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

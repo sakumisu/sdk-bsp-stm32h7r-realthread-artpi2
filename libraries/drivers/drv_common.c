@@ -53,14 +53,6 @@ uint32_t HAL_GetTick(void)
     return rt_tick_get() * 1000 / RT_TICK_PER_SECOND;
 }
 
-void HAL_SuspendTick(void)
-{
-}
-
-void HAL_ResumeTick(void)
-{
-}
-
 void HAL_Delay(__IO uint32_t Delay)
 {
     rt_thread_mdelay(Delay);
@@ -78,11 +70,11 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   * @param  None
   * @retval None
   */
-void _Error_Handler(char *s, int num)
+void _Error_Handler(void)
 {
     /* USER CODE BEGIN Error_Handler */
     /* User can add his own implementation to report the HAL error return state */
-    while(1)
+    while (1)
     {
     }
     /* USER CODE END Error_Handler */
@@ -99,10 +91,12 @@ void rt_hw_us_delay(rt_uint32_t us)
     start = SysTick->VAL;
     reload = SysTick->LOAD;
     us_tick = SystemCoreClock / 1000000UL;
-    do {
+    do
+    {
         now = SysTick->VAL;
         delta = start > now ? start - now : reload + start - now;
-    } while(delta < us_tick * us);
+    }
+    while (delta < us_tick * us);
 }
 
 /**
@@ -111,7 +105,6 @@ void rt_hw_us_delay(rt_uint32_t us)
 void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target_freq)
 {
     extern void rt_hw_systick_init(void);
-    extern void clk_init(char *clk_source, int source_freq, int target_freq);
 
     /* Update SystemCoreClock variable according to RCC registers values. */
     SystemCoreClockUpdate();
@@ -121,12 +114,9 @@ void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target
     /* Configure the system Power Supply */
     if (HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY) != HAL_OK)
     {
-    /* Initialization error */
-    Error_Handler();
+        /* Initialization error */
+        Error_Handler();
     }
-
-    /* System clock initialization */
-    clk_init(clock_src, clock_src_freq, clock_target_freq);
 
     rt_hw_systick_init();
 
