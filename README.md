@@ -1,6 +1,6 @@
 ## Introduction
 
-Chinese Page | [English Page](README.md)
+[中文页](README_ZH.md) | English Page
 
 The **sdk-bsp-stm32h7r-realthread-artpi2** is a support package developed by the RT-Thread team for the ART-Pi development board. It also serves as a software SDK for users to develop their applications more easily and conveniently.
 
