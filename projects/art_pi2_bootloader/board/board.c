@@ -8,9 +8,7 @@
  * 2020-07-29     RealThread   first version
  */
 
-#include <rtthread.h>
-#include <board.h>
-#include <drv_common.h>
+#include "board.h"
 
 #define DBG_TAG "board"
 #define DBG_LVL DBG_LOG
@@ -25,6 +23,12 @@ void SystemClock_Config(void)
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
+    /* Configure the system Power Supply */
+    if (HAL_PWREx_ConfigSupply(PWR_DIRECT_SMPS_SUPPLY) != HAL_OK)
+    {
+        /* Initialization error */
+        Error_Handler();
+    }
     /** Configure the main internal regulator output voltage
     */
     if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE0) != HAL_OK)
@@ -59,10 +63,10 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.PLL2.PLLFractional = 0;
     RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL3.PLLSource = RCC_PLLSOURCE_HSE; //454*454: 62--60hz, 800*480: 132--60hz
-    RCC_OscInitStruct.PLL3.PLLM = 4;
-    RCC_OscInitStruct.PLL3.PLLN = 132;
-    RCC_OscInitStruct.PLL3.PLLP = 4;  //4:44100 7:48000
-    RCC_OscInitStruct.PLL3.PLLQ = 24;
+    RCC_OscInitStruct.PLL3.PLLM = 2;
+    RCC_OscInitStruct.PLL3.PLLN = 50;
+    RCC_OscInitStruct.PLL3.PLLP = 2;
+    RCC_OscInitStruct.PLL3.PLLQ = 2;
     RCC_OscInitStruct.PLL3.PLLR = 24;
     RCC_OscInitStruct.PLL3.PLLS = 2;
     RCC_OscInitStruct.PLL3.PLLT = 2;
@@ -103,49 +107,13 @@ void SystemClock_Config(void)
 
 int clock_information(void)
 {
-    LOG_D("System Clock information");
-    LOG_D("SYSCLK_Frequency = %d", HAL_RCC_GetSysClockFreq());
-    LOG_D("HCLK_Frequency   = %d", HAL_RCC_GetHCLKFreq());
-    LOG_D("PCLK1_Frequency  = %d", HAL_RCC_GetPCLK1Freq());
-    LOG_D("PCLK2_Frequency  = %d", HAL_RCC_GetPCLK2Freq());
-    LOG_D("PLL2S_XSPI1_2_Frequency  = %d", HAL_RCC_GetPLL2SFreq());
-    LOG_D("PLL2T_Frequency  = %d", HAL_RCC_GetPLL2TFreq());
+    rt_kprintf("System Clock information\n");
+    rt_kprintf("SYSCLK_Frequency = %d\n", HAL_RCC_GetSysClockFreq());
+    rt_kprintf("HCLK_Frequency   = %d\n", HAL_RCC_GetHCLKFreq());
+    rt_kprintf("PCLK1_Frequency  = %d\n", HAL_RCC_GetPCLK1Freq());
+    rt_kprintf("PCLK2_Frequency  = %d\n", HAL_RCC_GetPCLK2Freq());
+    rt_kprintf("PLL2S_XSPI1_2_Frequency  = %d\n", HAL_RCC_GetPLL2SFreq());
+    rt_kprintf("PLL2T_Frequency  = %d\n", HAL_RCC_GetPLL2TFreq());
     return RT_EOK;
 }
 INIT_BOARD_EXPORT(clock_information);
-
-void clk_init(char *clk_source, int source_freq, int target_freq)
-{
-    // @TODO target freq twick.
-    HAL_MspInit();
-    SystemClock_Config();
-}
-
-void rt_hw_board_init()
-{
-    extern void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target_freq);
-
-    /* Enable I-Cache---------------------------------------------------------*/
-    SCB_EnableICache();
-
-    /* Enable D-Cache---------------------------------------------------------*/
-    SCB_EnableDCache();
-
-    /* Heap initialization */
-#if defined(RT_USING_HEAP)
-    rt_system_heap_init((void *) HEAP_BEGIN, (void *) HEAP_END);
-#endif
-
-    hw_board_init(BSP_CLOCK_SOURCE, BSP_CLOCK_SOURCE_FREQ_MHZ, BSP_CLOCK_SYSTEM_FREQ_MHZ);
-
-    /* Set the shell console output device */
-#if defined(RT_USING_DEVICE) && defined(RT_USING_CONSOLE)
-    rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
-#endif
-
-    /* Board underlying hardware initialization */
-#ifdef RT_USING_COMPONENTS_INIT
-    rt_components_board_init();
-#endif
-
-}

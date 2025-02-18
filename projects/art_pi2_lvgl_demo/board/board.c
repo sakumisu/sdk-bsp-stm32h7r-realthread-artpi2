@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2020, RT-Thread Development Team
+ * Copyright (c) 2006-2025, RT-Thread Development Team
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -8,92 +8,37 @@
  * 2020-07-29     RealThread   first version
  */
 
-#include <rtthread.h>
-#include <board.h>
-#include <drv_common.h>
-#include <rtdevice.h>
+ #include "board.h"
 
-#define DBG_TAG "board"
-#define DBG_LVL DBG_INFO
-#include <rtdbg.h>
+ #define DBG_TAG "board"
+ #define DBG_LVL DBG_LOG
+ #include <rtdbg.h>
+ 
+#ifdef RT_USING_INDEPENDENT_INTERRUPT_MANAGEMENT
+#define RT_NVIC_PRO_BITS    __NVIC_PRIO_BITS
 
-#if defined (RT_USING_MEMHEAP_AS_HEAP)
-    struct rt_memheap system_heap;
-    #define PSRAM_BANK_ADDR                 ((uint32_t)0X90000000)
-    #define PSRAM_SIZE                      ((uint32_t)0x2000000)   // 32MB
-#endif /* RT_USING_MEMHEAP_AS_HEAP */
-
-int clock_information(void)
+rt_base_t rt_hw_interrupt_disable(void)
 {
-    LOG_I("System Clock information");
-    LOG_I("SYSCLK_Frequency = %d", HAL_RCC_GetSysClockFreq());
-    LOG_I("HCLK_Frequency   = %d", HAL_RCC_GetHCLKFreq());
-    LOG_I("PCLK1_Frequency  = %d", HAL_RCC_GetPCLK1Freq());
-    LOG_I("PCLK2_Frequency  = %d", HAL_RCC_GetPCLK2Freq());
-    LOG_I("XSPI1_Frequency  = %d", HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI1));
-    LOG_I("XSPI2_Frequency  = %d", HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI2));
+    rt_base_t level = __get_BASEPRI();
+    __set_BASEPRI(RT_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - RT_NVIC_PRO_BITS));
 
-    return RT_EOK;
-}
-INIT_BOARD_EXPORT(clock_information);
+    __ISB();
+    __DSB();
 
-void rt_hw_board_init()
-{
-    extern void hw_board_init(char *clock_src, int32_t clock_src_freq, int32_t clock_target_freq);
-    extern int mpu_init(void);
-    mpu_init();
-    SCB_EnableICache();
-    SCB_EnableDCache();
-
-    hw_board_init(BSP_CLOCK_SOURCE, BSP_CLOCK_SOURCE_FREQ_MHZ, BSP_CLOCK_SYSTEM_FREQ_MHZ);
-    /* Heap initialization */
-#if defined(RT_USING_HEAP)
-    rt_system_heap_init((void *) HEAP_BEGIN, (void *) HEAP_END);
-#endif
-#ifdef RT_USING_MEMHEAP_AS_HEAP
-       /* If RT_USING_MEMHEAP_AS_HEAP is enabled, PSRAM is initialized to the heap */
-       rt_memheap_init(&system_heap, "psram", (void *)PSRAM_BANK_ADDR, PSRAM_SIZE);
-#endif
-
-    /* Set the shell console output device */
-#if defined(RT_USING_DEVICE) && defined(RT_USING_CONSOLE)
-    rt_console_set_device(RT_CONSOLE_DEVICE_NAME);
-#endif
-
-    /* Board underlying hardware initialization */
-#ifdef RT_USING_COMPONENTS_INIT
-    rt_components_board_init();
-#endif
-
+    return level;
 }
 
-#ifdef RT_USING_PM
+void rt_hw_interrupt_enable(rt_base_t level)
+{
+    __set_BASEPRI(level);
+}
+#endif /* RT_USING_INDEPENDENT_INTERRUPT_MANAGEMENT */
+
 /**
-  * @brief  Configures system clock after wake-up from STOP: enable HSI, PLL
-  *         and select PLL as system clock source.
-  * @param  None
-  * @retval None
-  */
-void SystemClock_ReConfig(uint8_t mode)
+ * @brief System Clock Configuration
+ * @retval None
+*/
+void SystemClock_Config(void)
 {
-    switch (mode)
-    {
-    case PM_RUN_MODE_HIGH_SPEED:
-//        SystemClock_480M();
-        break;
-    case PM_RUN_MODE_NORMAL_SPEED:
-//        SystemClock_240M();
-        break;
-    case PM_RUN_MODE_MEDIUM_SPEED:
-//        SystemClock_120M();
-        break;
-    case PM_RUN_MODE_LOW_SPEED:
-//        SystemClock_60M();
-        break;
-    default:
-        break;
-    }
-
-    // SystemClock_MSI_OFF();
+    return;
 }
-#endif

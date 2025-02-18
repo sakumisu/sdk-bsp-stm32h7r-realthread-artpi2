@@ -108,11 +108,8 @@ int mpu_init(void)
     HAL_MPU_ConfigRegion(&MPU_InitStruct);
     /* Enables the MPU */
     HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-    /* Enable CACHE */
-    SCB_EnableICache();
-    SCB_EnableDCache();
     
     return RT_EOK;
 
 }
-//INIT_BOARD_EXPORT(mpu_init);
+INIT_BOARD_EXPORT(mpu_init);
