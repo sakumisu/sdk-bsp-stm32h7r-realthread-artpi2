@@ -7,6 +7,7 @@ cwd = GetCurrentDir()
 # src = Glob('*.c')
 src = ['board.c']
 src += ['drv_mpu.c']
+src += ['extmem_manager.c']
 
 # add cubemx drivers
 src += Split('''

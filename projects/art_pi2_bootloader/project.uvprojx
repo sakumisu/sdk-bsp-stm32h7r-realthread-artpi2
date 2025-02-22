@@ -10,7 +10,7 @@
       <TargetName>rt-thread</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -338,9 +338,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>RT_USING_LIBC, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_ARMLIBC, USE_HAL_DRIVER, __STDC_LIMIT_MACROS, STM32H7S7xx, __RTTHREAD__</Define>
+              <Define>__STDC_LIMIT_MACROS, RT_USING_LIBC, RT_USING_ARMLIBC, __CLK_TCK=RT_TICK_PER_SECOND, __RTTHREAD__, USE_HAL_DRIVER, STM32H7S7xx</Define>
               <Undefine></Undefine>
-              <IncludePath>libraries\CMSIS\Include;applications;rt-thread\components\libc\posix\ipc;rt-thread\components\drivers\include;rt-thread\components\libc\posix\io\epoll;libraries\bsp_components\w35t51nwtbie;rt-thread\libcpu\arm\common;board;rt-thread\components\drivers\include;rt-thread\libcpu\arm\cortex-m7;rt-thread\components\libc\compilers\common\extension\fcntl\octal;libraries\STM32H7RSxx_HAL_Driver\Inc;rt-thread\components\libc\compilers\common\include;libraries\drivers\include\config;rt-thread\components\libc\posix\io\poll;rt-thread\components\libc\compilers\common\extension;libraries\drivers\include;libraries\bsp_components;rt-thread\include;rt-thread\components\drivers\include;rt-thread\components\libc\posix\io\eventfd;.;board\CubeMX_Config\Boot\Inc;libraries\drivers;libraries\CMSIS\Device\ST\STM32H7RSxx\Include;rt-thread\components\finsh;libraries\bsp_components\aps256xx;rt-thread\components\drivers\include</IncludePath>
+              <IncludePath>rt-thread\components\libc\posix\ipc;rt-thread\components\libc\compilers\common\extension;rt-thread\components\drivers\include;libraries\CMSIS\Include;rt-thread\components\libc\posix\io\poll;board;rt-thread\components\drivers\include;libraries\drivers\include;rt-thread\components\libc\compilers\common\extension\fcntl\octal;rt-thread\components\libc\compilers\common\include;libraries\drivers\include\config;rt-thread\libcpu\arm\common;libraries\CMSIS\Device\ST\STM32H7RSxx\Include;libraries\drivers;rt-thread\components\drivers\include;board\CubeMX_Config\Boot\Inc;rt-thread\components\libc\posix\io\epoll;rt-thread\components\libc\posix\io\eventfd;applications;rt-thread\components\finsh;rt-thread\libcpu\arm\cortex-m7;libraries\STM32H7RSxx_HAL_Driver\Inc;libraries\bsp_components;.;rt-thread\include;libraries\bsp_components\w35t51nwtbie;libraries\bsp_components\aps256xx;rt-thread\components\drivers\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -494,7 +494,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -550,7 +550,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -606,7 +606,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -662,7 +662,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -718,7 +718,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -774,7 +774,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -830,7 +830,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -886,7 +886,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -942,7 +942,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -998,7 +998,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1054,7 +1054,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_IPC_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1079,6 +1079,11 @@
               <FileName>drv_mpu.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\drv_mpu.c</FilePath>
+            </File>
+            <File>
+              <FileName>extmem_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\extmem_manager.c</FilePath>
             </File>
             <File>
               <FileName>drv_common.c</FileName>
@@ -1121,14 +1126,14 @@
               <FilePath>rt-thread\components\finsh\msh_parse.c</FilePath>
             </File>
             <File>
-              <FileName>shell.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\components\finsh\shell.c</FilePath>
-            </File>
-            <File>
               <FileName>msh.c</FileName>
               <FileType>1</FileType>
               <FilePath>rt-thread\components\finsh\msh.c</FilePath>
+            </File>
+            <File>
+              <FileName>shell.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\components\finsh\shell.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1185,7 +1190,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1241,7 +1246,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1297,7 +1302,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1353,7 +1358,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1409,7 +1414,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1465,7 +1470,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1521,7 +1526,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1577,7 +1582,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1633,7 +1638,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1689,7 +1694,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1745,7 +1750,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1801,7 +1806,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1857,7 +1862,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1913,7 +1918,7 @@
                       <MiscControls> </MiscControls>
                       <Define>__RT_KERNEL_SOURCE__</Define>
                       <Undefine> </Undefine>
-                      <IncludePath></IncludePath>
+                      <IncludePath> </IncludePath>
                     </VariousControls>
                   </Cads>
                 </FileArmAds>
@@ -1970,14 +1975,9 @@
           <GroupName>STM32_HAL</GroupName>
           <Files>
             <File>
-              <FileName>stm32h7rsxx_hal_crc_ex.c</FileName>
+              <FileName>stm32h7rsxx_hal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_crc_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_gpio.c</FilePath>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_hal_dma.c</FileName>
@@ -1985,109 +1985,9 @@
               <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_dma.c</FilePath>
             </File>
             <File>
-              <FileName>startup_stm32h7r7xx.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>libraries\CMSIS\Device\ST\STM32H7RSxx\Source\Templates\arm\startup_stm32h7r7xx.s</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_crc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_pwr_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_cryp_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cryp_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_flash_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_flash_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_adc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_adc_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rng.c</FilePath>
-            </File>
-            <File>
               <FileName>system_stm32h7rsxx.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\CMSIS\Device\ST\STM32H7RSxx\Source\Templates\system_stm32h7rsxx.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_cec.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cec.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_uart_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_rcc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rcc_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_dma_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_dma_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_cortex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cortex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_xspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_xspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_cryp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cryp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32h7rsxx_hal_pwr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32h7rsxx_hal_rcc.c</FileName>
@@ -2095,9 +1995,114 @@
               <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rcc.c</FilePath>
             </File>
             <File>
+              <FileName>stm32h7rsxx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32h7rsxx_hal_sram.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_sram.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_cortex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_dma_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_dma_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_adc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_adc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_cryp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cryp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_flash_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_flash_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_cec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cec.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rng.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_pwr_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_crc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_crc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_cryp_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_cryp_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_uart_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_uart_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_stm32h7r7xx.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>libraries\CMSIS\Device\ST\STM32H7RSxx\Source\Templates\arm\startup_stm32h7r7xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_rcc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32h7rsxx_hal_xspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32H7RSxx_HAL_Driver\Src\stm32h7rsxx_hal_xspi.c</FilePath>
             </File>
           </Files>
         </Group>
