@@ -11,14 +11,12 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <board.h>
-#include <drv_common.h>
 #include <extmem_manager.h>
 
 #define DBG_TAG "main"
 #define DBG_LVL DBG_LOG
 #include <rtdbg.h>
 
-/* defined the LED0 pin: PB1 */
 #define LED_RED GET_PIN(O, 5)
 #define LED_BLUE GET_PIN(O, 1)
 
@@ -98,18 +96,12 @@ static void MX_FLASH_Init(void)
 
 int main(void)
 {
-    uint8_t device_id[6];
-    int retr = 0;
-
-    /* set LED0 pin mode to output */
-    rt_pin_mode(LED_RED, PIN_MODE_OUTPUT);
-
     MX_FLASH_Init();
     EXTMEM_Init();
 
     EXTMEM_Flash_Probe();
-    EXTMEM_Flash_EnterXIP();
     EXTMEM_PSRAM_Probe();
+    EXTMEM_Flash_EnterXIP();
     EXTMEM_PSRAM_EnterXIP();
 
     rt_kprintf("\nJump to APP...\n");
