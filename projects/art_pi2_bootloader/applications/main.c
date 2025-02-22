@@ -24,13 +24,12 @@
 
 int JumpToApplication(void)
 {
-    uint32_t primask_bit;
     typedef void (*pFunction)(void);
     pFunction JumpToApp;
     uint32_t Application_vector;
 
     /* Suspend SysTick */
-    HAL_SuspendTick();
+    SysTick->CTRL = 0;
 
     /* Disable I-Cache---------------------------------------------------------*/
     SCB_DisableICache();  //TODO SCB_Disables Cache and jump success
@@ -45,6 +44,7 @@ int JumpToApplication(void)
     JumpToApp = (pFunction)(*(__IO uint32_t *)(Application_vector + 4u));
 
     __set_MSP(*(__IO uint32_t *)Application_vector);
+    __set_CONTROL(0);
 
     JumpToApp();
     return 0;
