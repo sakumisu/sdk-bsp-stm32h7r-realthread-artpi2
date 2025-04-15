@@ -30,7 +30,8 @@ $ sdk-bsp-stm32h7r-realthread-artpi2
 │   ├── art_pi2_lvgl_demo
 │   ├── art_pi2_touchgfx
 │   ├── art_pi2_sdcard
-│   └── art_pi_wifi
+│   ├── art_pi_wifi
+│   └── art_pi_mongoose
 ├── rt-thread
 └── tools
 ```

@@ -1,0 +1,7 @@
+#ifndef MONGOOSE_CONFIG_H
+#define MONGOOSE_CONFIG_H
+
+#define MG_ARCH             MG_ARCH_RTTHREAD
+#define MG_ENABLE_PACKED_FS 1
+
+#endif // MONGOOSE_CONFIG_H

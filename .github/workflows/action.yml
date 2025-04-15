@@ -55,6 +55,7 @@ jobs:
          - {RTT_BSP: "art_pi2_lvgl_demo"}
          - {RTT_BSP: "art_pi2_sdcard"}
          - {RTT_BSP: "art_pi2_wifi"}
+         - {RTT_BSP: "art_pi2_mongoose"}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python

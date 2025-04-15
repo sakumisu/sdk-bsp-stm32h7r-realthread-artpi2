@@ -1,0 +1,12 @@
+[
+ {
+  "path": "/packages/iot/wifi-host-driver", 
+  "ver": "latest", 
+  "name": "WIFI_HOST_DRIVER"
+ }, 
+ {
+  "path": "/packages/iot/netutils", 
+  "ver": "latest", 
+  "name": "NETUTILS"
+ }
+]
