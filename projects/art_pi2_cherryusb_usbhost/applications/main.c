@@ -16,7 +16,7 @@
 int main(void)
 {
 
-	usbh_initialize(0, USB_OTG_HS_PERIPH_BASE);
+    usbh_initialize(0, USB_OTG_HS_PERIPH_BASE);
 
     while(1)
     {

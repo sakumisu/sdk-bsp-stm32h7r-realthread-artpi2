@@ -16,7 +16,7 @@
 int main(void)
 {
     extern void cdc_acm_init(uint8_t busid, uintptr_t reg_base);
-	cdc_acm_init(0, USB_OTG_HS_PERIPH_BASE);
+    cdc_acm_init(0, USB_OTG_HS_PERIPH_BASE);
 
     while(1)
     {
