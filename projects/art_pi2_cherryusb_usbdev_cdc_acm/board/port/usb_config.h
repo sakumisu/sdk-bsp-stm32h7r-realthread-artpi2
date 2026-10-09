@@ -197,6 +197,14 @@
 #define CONFIG_USBHOST_MSC_TIMEOUT 5000
 #endif
 
+/* Host net thread configuration */
+#ifndef CONFIG_USBHOST_NET_THREAD_PRIO
+#define CONFIG_USBHOST_NET_THREAD_PRIO 20
+#endif
+#ifndef CONFIG_USBHOST_NET_THREAD_STACKSIZE
+#define CONFIG_USBHOST_NET_THREAD_STACKSIZE 2048
+#endif
+
 /* This parameter affects usb performance, and depends on (TCP_WND)tcp eceive windows size,
  * you can change to 2K ~ 16K and must be larger than TCP RX windows size in order to avoid being overflow.
  */
@@ -275,6 +283,8 @@
  * in xxx32 chips, only pb14/pb15 can support dma mode, pa11/pa12 is not supported(only a few supports, but we ignore them)
 */
 // #define CONFIG_USB_DWC2_DMA_ENABLE
+#define CONFIG_USB_DWC2_DEV_DESC_DMA_ENABLE
+#define CONFIG_USB_DWC2_DEV_DMA_DESC_NUM 4
 
 /* ---------------- MUSB Configuration ---------------- */
 // #define CONFIG_USB_MUSB_SUNXI
